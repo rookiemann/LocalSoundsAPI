@@ -66,7 +66,7 @@ Everything runs locally from one folder — no installation, no internet needed 
        • Starting from which port? (e.g., 5006, 5007, 5008...)  
      Each instance gets its own port and browser tab.
 
-**First run only:** The app auto-downloads all models (~8–12 GB total). This happens once and can take 10–40 minutes. Just let it finish.
+**First run only:** The app auto-downloads all models (~8–12 GB total). This happens on a need-to-use basis once and can take 10–40 minutes. Just let it finish.
 
 That's it – completely offline and portable after the first run!
 
