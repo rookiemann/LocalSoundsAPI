@@ -1,7 +1,7 @@
 # LocalSoundsAPI
 
 **The ultimate portable, offline all-in-one audio studio**  
-Text-to-Speech · Music Generation · Sound Effects · Video Production · AI Chatbot
+Text-to-Speech · Transcription - Subtitles - Music Generation · Sound Effects · Video Production · AI Chatbot
 
 **LocalSoundsAPI** gives you both a full-featured **browser-based web interface** and a complete **local REST API** — use it interactively or call it from scripts, other apps, or automation tools.
 
