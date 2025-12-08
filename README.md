@@ -104,3 +104,17 @@ project-root/
 ```
 
 
+## Why This Feels So Smooth
+- **Completely self-contained** – The bundled portable Python environment is isolated from your system Python. No pip installs, no conda environments, no dependency conflicts, no PATH headaches. Just extract and run.
+- **Truly offline** – After the initial model downloads (which you can do once), everything works 100% without internet.
+- **No admin rights needed** – Perfect for work/school computers or USB stick setups.
+- **Instant multi-GPU support** – Load heavy models on your best GPU and lighter ones (Whisper, Kokoro, Fish) on another or on CPU — all from the same interface.
+
+### Tips for the Best Experience
+- **First run?** Let the app auto-download the models you need (XTTS, Fish, Kokoro, Stable Audio, ACE-Step, CLAP, Whisper). It only happens once per model.
+- **Low VRAM?** Use the per-model device selectors — keep big models on your strongest GPU and run Whisper/Kokoro on CPU or a smaller card.
+- **Want to generate faster?** Launch multiple instances with `LocalSoundsAPI-Multi.bat` — one for TTS, one for music, one for the chatbot, etc.
+- **Chatbot for content creation** – Stuck on a prompt or lyric? Ask the built-in assistant — then click the little icons under its reply to send the text straight to XTTS, Fish, Kokoro, Stable Audio, or ACE-Step.
+- **Save everything you like** – Use the “Save Path” field to create permanent projects in `projects_output/`. Temporary generations disappear when you close the app (unless saved).
+
+Enjoy a clean, powerful, completely local creative workflow — no cloud, no subscriptions, no compromises! 🎧✨
