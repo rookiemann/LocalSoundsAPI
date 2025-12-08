@@ -39,29 +39,37 @@ Everything runs locally from one folder — no installation, no internet needed 
 
 - **Settings presets** – Save and load all your favorite parameters instantly.
 
-
 ## Quick Start – Fully Portable (No Installation)
 
-1. **Download the repository**  
-   https://github.com/rookiemann/LocalSoundsAPI
+1. **Download the repository code**  
+   Go to the main repo → Code → Download ZIP.  
+   Extract it to any folder you like (e.g., Desktop, Documents, or a USB drive). This is your main project folder.
 
-2. **Download the portable binaries** (from Releases)  
-   https://github.com/rookiemann/LocalSoundsAPI/releases  
-   Get both files from the latest release:
-   - `portable-python-env-v1.7z`
+2. **Download the portable binaries from Releases**  
+   Go to [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) and download:  
+   - `portable-python-env-v1.7z`  
    - `bin.zip`
 
-3. **Extract into the same folder**
-   - `portable-python-env-v1.7z` → creates a `python/` folder
-   - `bin.zip` → populates `bin/ffmpeg`, `bin/rubberband`, and `bin/espeak-ng`
+3. **Extract the binaries correctly**  
+   - Extract `portable-python-env-v1.7z` **directly into your main project folder** → it creates the `python/` subfolder.  
+   - Extract `bin.zip` **into the existing `bin/` folder** (inside your main project folder) → it populates `bin/ffmpeg/`, `bin/rubberband/`, and `bin/espeak-ng/`.
 
-4. **Launch**
-   - `(portable) LocalSoundsAPI-Single.bat` → one instance (recommended)
-   - `(portable) LocalSoundsAPI-Multi.bat` → multiple instances on different ports
+4. **Launch the app**  
+   - **Single instance (recommended for most users):**  
+     Double-click `(portable) LocalSoundsAPI-Single.bat`  
+     → It always starts on port **5006** and opens http://127.0.0.1:5006 in your browser.
 
-   Opens automatically at http://127.0.0.1:5006
+   - **Multiple instances (for running several generations in parallel):**  
+     Double-click `(portable) LocalSoundsAPI-Multi.bat`  
+     → It will ask you:  
+       • How many instances do you want?  
+       • Starting from which port? (e.g., 5006, 5007, 5008...)  
+     Each instance gets its own port and browser tab.
 
-  
+**First run only:** The app auto-downloads all models (~8–12 GB total). This happens once and can take 10–40 minutes. Just let it finish.
+
+That's it – completely offline and portable after the first run!
+
 ## Important Folders
 - `models/` – Place or auto-download TTS/music models here
 - `voices/` – Your reference voice samples for cloning
