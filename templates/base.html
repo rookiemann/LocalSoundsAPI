@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>LocalSoundsAPI</title>
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='icons/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            {% block content %}{% endblock %}
+            <div style="height: 400px; visibility: hidden; pointer-events: none"></div>
+        </div>
+
+        <footer class="mt-5 py-5 footer-spacer"></footer>
+
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

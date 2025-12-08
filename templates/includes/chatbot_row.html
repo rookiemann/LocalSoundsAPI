@@ -1,0 +1,269 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-chat-dots me-2"></i>
+        <span class="toggle-text">Chatbot</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+    <div class="row-content">
+        <div class="row g-3 mb-4">
+            <!-- LEFT: Model Control -->
+            <div class="col-lg-3">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="settings-slider">
+                        <!-- MAIN PANEL – all controls, perfectly styled again -->
+                        <div class="slide-panel active p-3 d-flex flex-column gap-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">LLM Backend</h5>
+                                <button class="btn btn-sm btn-outline-light show-settings">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+                            <select id="llmBackendSelect" class="form-select form-select-sm mb-3">
+                                <option value="local">Llama.cpp</option>
+                                <option value="lmstudio">LM Studio</option>
+                                <option value="openrouter">OpenRouter</option>
+                            </select>
+                            <!-- LOCAL LLAMA.CPP -->
+                            <div id="localLlmControls">
+                                <select id="llamaModelSelect" class="form-select mb-3"></select>
+                                <button id="llamaRefreshModels" class="btn btn-outline-light btn-sm mb-3 w-100">
+                                    Refresh Models
+                                </button>
+
+                                <div class="mb-4">
+                                    <label class="form-label small text-muted">Context Length</label>
+                                    <input
+                                        type="range"
+                                        min="2048"
+                                        max="32768"
+                                        step="1024"
+                                        value="8192"
+                                        id="llamaCtx"
+                                        class="form-range mb-2"
+                                    />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Context</small>
+                                        <span id="llamaCtxVal" class="badge bg-accent fs-6">8192</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label small text-muted">GPU Layers</label>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="99"
+                                        value="99"
+                                        id="llamaLayers"
+                                        class="form-range mb-2"
+                                    />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">GPU Layers</small>
+                                        <span id="llamaLayersVal" class="badge bg-accent fs-6">99</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 mb-3">
+                                    <button id="loadLlamaBtn" class="btn btn-success flex-fill">Load</button>
+                                    <button id="unloadLlamaBtn" class="btn btn-danger flex-fill">Unload</button>
+                                </div>
+
+                                <div class="text-center mt-auto">
+                                    <span id="llamaStatusBadge" class="badge bg-secondary fs-6">Not loaded</span>
+                                    <div id="llamaCurrentModel" class="small text-muted mt-2 fw-bold">—</div>
+                                </div>
+                            </div>
+
+                            <!-- LM STUDIO -->
+                            <div id="lmstudioControls" class="d-none">
+                                <div class="text-center py-4">
+                                    <h6 class="text-muted mb-3">LM Studio Proxy Mode</h6>
+                                    <p class="small text-muted mb-2">
+                                        Uses whatever model is currently loaded in the LM Studio app
+                                    </p>
+                                    <div class="mt-3">
+                                        <span id="lmstudioStatusBadge" class="badge bg-secondary fs-6"
+                                            >Checking...</span
+                                        >
+                                        <div id="lmstudioCurrentModel" class="small text-muted mt-2 fw-bold">—</div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <small class="text-muted"> Load/unload models directly in LM Studio UI </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- OPENROUTER -->
+                            <div id="openrouterControls" class="d-none">
+                                <select id="openrouterModelSelect" class="form-select mb-3">
+                                    <option>Loading models...</option>
+                                </select>
+                                <button id="openrouterRefreshModels" class="btn btn-outline-light btn-sm mb-3 w-100">
+                                    Refresh Models
+                                </button>
+                                <div class="text-center mt-auto">
+                                    <span id="openrouterStatusBadge" class="badge bg-secondary fs-6"
+                                        >Checking key...</span
+                                    >
+                                    <div class="small text-muted mt-2 fw-bold">OpenRouter</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SETTINGS PANEL – inference sliders (unchanged & perfect) -->
+                        <div class="slide-panel p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <button class="btn btn-sm btn-outline-light show-main">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <h5 class="mb-0">LLM Inference Settings</h5>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Temperature <span id="tempChatVal">0.80</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="0.1"
+                                        max="2.0"
+                                        step="0.05"
+                                        value="0.80"
+                                        id="temperature_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('tempChatVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Max Tokens <span id="maxTokensVal">8192</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="512"
+                                        max="32768"
+                                        step="512"
+                                        value="8192"
+                                        id="max_tokens_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('maxTokensVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Top P <span id="topPVal">0.95</span></label>
+                                    <input
+                                        type="range"
+                                        min="0.0"
+                                        max="1.0"
+                                        step="0.01"
+                                        value="0.95"
+                                        id="top_p_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('topPVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Top K <span id="topKVal">40</span></label>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="100"
+                                        step="1"
+                                        value="40"
+                                        id="top_k_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('topKVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Presence Penalty <span id="presPenVal">0.0</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="-2.0"
+                                        max="2.0"
+                                        step="0.1"
+                                        value="0.0"
+                                        id="presence_penalty_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('presPenVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Frequency Penalty <span id="freqPenVal">0.0</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="-2.0"
+                                        max="2.0"
+                                        step="0.1"
+                                        value="0.0"
+                                        id="frequency_penalty_chat"
+                                        class="form-range"
+                                        oninput="document.getElementById('freqPenVal').textContent=this.value"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: Chat + NEW CONTROLS AT TOP -->
+            <div class="col-lg-6">
+                <div class="card d-flex flex-column" style="max-height: 80vh">
+                    <!-- NEW: History Controls (far from Send) -->
+                    <div class="p-3 border-bottom bg-dark">
+                        <div class="d-flex gap-2 align-items-center flex-wrap">
+                            <button id="saveHistoryBtn" class="btn btn-outline-success btn-sm">Clear / Save</button>
+                            <button id="deleteHistoryBtn" class="btn btn-outline-danger btn-sm">Clear / Delete</button>
+                            <select id="savedHistorySelect" class="form-select form-select-sm" style="width: auto">
+                                <option>— Load old chat —</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="chatHistory" class="flex-fill overflow-auto p-3" style="background: #1e1e1e"></div>
+
+                    <div class="p-3 border-top">
+                        <textarea
+                            id="llamaInput"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Type your message... (Enter = send, Shift+Enter = new line)"
+                        ></textarea>
+                        <div class="mt-2 text-end">
+                            <button id="sendLlamaBtn" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- RIGHT: System Prompt Manager -->
+                <div class="col-lg-3">
+                    <div class="card h-100 d-flex flex-column">
+                        <div class="card-header">
+                            <h5 class="mb-0">System Prompt</h5>
+                        </div>
+                        <div class="p-3">
+                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                <select id="systemPromptSelect" class="form-select form-select-sm">
+                                    <option value="">— New Preset —</option>
+                                </select>
+                                <input type="text" id="systemPromptName" class="form-control form-control-sm" placeholder="Preset name">
+                                <button id="saveSystemPromptBtn" class="btn btn-success btn-sm">Save Preset</button>
+                            </div>
+                        </div>
+                        <div class="flex-fill p-3 pt-0">
+                            <textarea id="systemPromptText" class="form-control h-100" style="font-family: monospace; font-size: 0.9rem;" placeholder="You are a helpful assistant..."></textarea>
+                        </div>
+                        <div class="p-2 text-center">
+                            <small class="text-muted">Changes apply instantly</small>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-journal-text me-2"></i>
+        <span class="toggle-text">Master Cheat Sheet – Recommended Settings</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+
+    <div class="row-content">
+        <div class="card bg-dark text-light p-4">
+            <div class="row g-4">
+
+                <!-- XTTS v2 -->
+                <div class="col-lg-6">
+                    <h5 class="text-success mb-3">XTTS v2 – Daily Driver (GPU or CPU)</h5>
+                    <p class="text-info small mb-3">Fast • Multilingual • Reliable • Built-in voice cloning</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%">Parameter</th>
+                                    <th style="width: 25%">Recommended</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Temperature</td>        <td>0.65 – 0.75</td> <td>&gt;0.85 → slurring, &lt;0.55 → robotic</td></tr>
+                                <tr><td>Speed</td>              <td>0.90 – 1.15</td> <td>Rubberband handles extremes</td></tr>
+                                <tr><td>Repetition Penalty</td><td>3.0 – 6.0</td>   <td>Too low → stuttering on long text</td></tr>
+                                <tr><td>Top P / Top K</td>      <td>Default</td>     <td>Only change if gibberish appears</td></tr>
+                                <tr><td>Whisper Tolerance</td>  <td>78 – 84%</td>    <td>&gt;90% too strict, &lt;70% lets garbage through</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="small mt-3 mb-0">
+                        <span class="text-success">Pros:</span> Fast, CPU-friendly, any language<br>
+                        <span class="text-danger">Cons:</span> Voice cloning good but not perfect
+                    </p>
+                </div>
+
+                <!-- Fish Speech 1.4 -->
+                <div class="col-lg-6">
+                    <h5 class="text-danger mb-3">Fish Speech 1.4 – Highest Quality Cloning (GPU only)</h5>
+                    <p class="text-info small mb-3">Best voice similarity • Very high quality • Slow inference</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%">Parameter</th>
+                                    <th style="width: 25%">Recommended</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Temperature</td>       <td>0.60 – 0.70</td> <td>&gt;0.75 → unnatural accent drift</td></tr>
+                                <tr><td>Top P</td>             <td>0.80 – 0.90</td> <td>Avoid below 0.70</td></tr>
+                                <tr><td>Reference audio</td>   <td>8–20 s clean</td><td>No music or background noise</td></tr>
+                                <tr><td>Whisper Tolerance</td> <td>70 – 80%</td>    <td>Can be stricter than XTTS</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="small mt-3 mb-0">
+                        <span class="text-success">Pros:</span> Near-perfect cloning<br>
+                        <span class="text-danger">Cons:</span> 3–8× real-time (4090), occasional crashes (use ##recover##)
+                    </p>
+                </div>
+
+                <!-- Kokoro 82M -->
+                <div class="col-lg-6">
+                    <h5 class="text-info mb-3">Kokoro 82M – Fast CPU Inference</h5>
+                    <p class="text-info small mb-3">Extremely fast • Good quality • Skips unknown words</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%">Parameter</th>
+                                    <th style="width: 25%">Recommended</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Speed</td>           <td>1.3 – 1.6</td>  <td>&gt;1.7 → chipmunk</td></tr>
+                                <tr><td>Pitch / Energy</td>  <td>Adjust freely</td><td>Big impact on expression</td></tr>
+                                <tr><td>Whisper Verify</td>  <td>Off or ≥92%</td><td>Lower values fail often</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="small mt-3 mb-0">
+                        <span class="text-success">Pros:</span> 30–40× real-time on CPU<br>
+                        <span class="text-danger">Cons:</span> Unknown names → silence
+                    </p>
+                </div>
+
+                <!-- Stable Audio Open 1.0 -->
+                <div class="col-lg-6">
+                    <h5 class="text-cyan mb-3">Stable Audio Open 1.0 – SFX & Short Music (≤47 s)</h5>
+                    <p class="text-info small mb-3">Best-in-class sound effects • Short musical clips</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%">Parameter</th>
+                                    <th style="width: 25%">Recommended</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Length</td>       <td>5–12 s (SFX)<br>30–47 s (music)</td> <td>Long complex prompts get muddy</td></tr>
+                                <tr><td>Steps</td>        <td>80 – 100</td>   <td>&lt;60 → noisy</td></tr>
+                                <tr><td>CFG Scale</td>    <td>3.5 – 5.0</td>  <td>Higher = better prompt adherence</td></tr>
+                                <tr><td>Batch size</td>   <td>6 – 10</td>     <td>Use CLAP to pick best result</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ACE-Step -->
+                <div class="col-lg-6">
+                    <h5 class="text-warning mb-3">ACE-Step – Full-Length Songs (Fallback Only)</h5>
+                    <p class="text-info small mb-3">2–4 minute tracks • Acceptable quality</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%">Parameter</th>
+                                    <th style="width: 25%">Recommended</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Steps</td>     <td>45 – 55</td>   <td>Higher gives minimal improvement</td></tr>
+                                <tr><td>Guidance</td>  <td>4.5 – 6.0</td> <td>Too low → incoherent</td></tr>
+                                <tr><td>Prompt</td>    <td>First line = genre/style<br>Rest = lyrics</td><td>No [tags] needed</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Golden Rules -->
+                <div class="col-12">
+                    <div class="alert alert-danger border-0 p-4 mt-3">
+                        <h5 class="text-white mb-3">Golden Rules & Essential Tips</h5>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-2">• Leave save path blank → preview only (no file saved)</li>
+                            <li class="mb-2">• Enter folder name → auto-saves to <code>projects_output/ThatFolder</code></li>
+                            <li class="mb-2">• <code>##recover##</code> → instantly resumes crashed job</li>
+                            <li class="mb-2">• Whisper keeps failing? Edit <code>job.json</code> → set <code>"verify_whisper": false</code></li>
+                            <li class="mb-2">• Kill stuck job → close the app entirely</li>
+                            <li class="mb-2">• Need true concurrency → run multiple instances on ports 5006–5009</li>
+                            <li>• Post-processing (Rubberband, EQ, etc.) is required for professional results</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

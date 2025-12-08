@@ -1,0 +1,186 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-film me-2"></i>
+        <span class="toggle-text">Video Production Studio</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+    <div class="row-content">
+        <div class="container py-4">
+            <!-- ROW 1: Project Folder + Dropzone -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Video Project Folder</h5>
+                            <div class="input-group mb-3">
+                                <span
+                                    class="input-group-text"
+                                    id="folderLabel"
+                                    style="cursor: pointer"
+                                    title="Click to select folder"
+                                    >Folder</span
+                                >
+                                <input
+                                    type="text"
+                                    id="projectDir"
+                                    class="form-control"
+                                    placeholder="'project', 'E:\rootdir\projects_output\my_project'"
+                                />
+                                <button id="loadProjectBtn" class="btn btn-outline-primary">Scan</button>
+                                <input type="file" id="folderPicker" style="display: none" webkitdirectory directory />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-3">Drop Files or Folder Here</h5>
+                            <div
+                                id="mediaDropZone"
+                                class="upload-zone flex-fill d-flex align-items-center justify-content-center p-5 border border-2 border-dashed rounded text-center"
+                            >
+                                <div>
+                                    <i class="bi bi-cloud-arrow-up-fill fs-1 text-primary mb-3"></i>
+                                    <p class="fw-bold mb-1">Drop audio • images • videos • or entire folder</p>
+                                    <p class="text-muted small">Multiple files/folders OK</p>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="mediaInput"
+                                    multiple
+                                    class="d-none"
+                                    accept="audio/*,video/*,image/*"
+                                />
+                            </div>
+                            <div id="uploadStatus" class="text-center mt-3 small"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2: Files list + Preview -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-3">Project Files</h5>
+                            <select id="mediaSelect" class="form-select flex-fill mb-3" size="15"></select>
+
+                            <div class="d-flex gap-3 align-items-center mb-2 flex-wrap">
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" id="prod_autoTranscribe" checked />
+                                    <label class="form-check-label small" for="prod_autoTranscribe"
+                                        >Auto-transcribe after upload/select</label
+                                    >
+                                </div>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" id="prod_autoMakeVideo" />
+                                    <label class="form-check-label small" for="prod_autoMakeVideo"
+                                        >Auto-create video after transcription</label
+                                    >
+                                </div>
+                            </div>
+
+                            <button id="transcribeBtn" class="btn btn-primary w-100 mb-2" disabled>
+                                Transcribe with Whisper
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-3">Preview</h5>
+                            <div
+                                id="previewArea"
+                                class="flex-fill bg-dark rounded d-flex align-items-center justify-content-center overflow-hidden"
+                            >
+                                <small class="text-muted">Click a file to preview</small>
+                            </div>
+                            <small id="previewName" class="text-center text-muted mt-2"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3: Transcription -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Transcription</h5>
+                            <textarea
+                                id="transcriptionText"
+                                class="form-control font-monospace bg-dark text-light"
+                                rows="8"
+                                readonly
+                                style="resize: none"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 4: Video Settings -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Create Video</h5>
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-4">
+                                    <label class="form-label">Resolution</label>
+                                    <select id="resolution" class="form-select">
+                                        <option>720p</option>
+                                        <option selected>1080p</option>
+                                        <option>1440p</option>
+                                        <option>4K</option>
+                                        <option value="1080p_vertical">1080p Vertical (9:16)</option>
+                                        <option value="4k_vertical">4K Vertical (9:16)</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="form-label">Background Mode</label>
+                                    <select id="bgModeSelect" class="form-select">
+                                        <option value="color|red" selected>Solid Red Screen</option>
+                                        <option value="color|green">Solid Green Screen</option>
+                                        <option value="color|blue">Solid Blue Screen</option>
+                                        <option value="images">Cycle Images / Videos from folder</option>
+                                        <option value="transparent">Transparent Background (WebM + alpha)</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <button id="createVideoBtn" class="btn btn-success btn-lg w-100" disabled>
+                                        Create Video
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT VIDEO -->
+            <div id="videoResult" class="text-center mb-5" style="display: none">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <video
+                            id="resultVideo"
+                            controls
+                            class="w-100 rounded shadow"
+                            style="max-height: 70vh; background: #000"
+                        ></video>
+                        <div class="mt-4">
+                            <a id="downloadLink" class="btn btn-primary btn-lg" download>Download Video</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

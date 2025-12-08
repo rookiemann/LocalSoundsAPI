@@ -1,0 +1,17 @@
+python/
+models/stable-audio-open-1.0/
+models/XTTS-v2/
+models/kokoro-82m/
+models/ace_step/
+models/clap-htsat-unfused/
+models/fish-speech/
+bin/ffmpeg/
+bin/rubberband/
+bin/espeak-ng/
+voices/*
+!voices/.gitkeep
+output_tts/
+projects_output/
+__pycache__/
+*.pyc
+*.log

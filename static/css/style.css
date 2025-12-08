@@ -1,0 +1,515 @@
+/* style.css */
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #f0f6fc;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --success: #238636;
+  --danger: #da3633;
+  --warning: #d29922;
+  --input-bg: #21262d;
+  --input-focus: #1f6feb;
+}
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .95rem;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.container { max-width: 1500px; margin: 0 auto; padding: 0 1rem; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.card h5 {
+  margin: 0 0 .75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.form-control, .form-select {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--border);
+  color: var(--text) !important;
+  border-radius: 4px;
+  font-size: .9rem;
+}
+.form-control:focus, .form-select:focus {
+  background: #2d333b !important;
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px rgba(88,166,255,.3) !important;
+  color: #fff !important;
+}
+.form-control::placeholder { color: #8b949e !important; opacity: 1; }
+.form-label {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: .35rem;
+  font-size: .85rem;
+}
+.form-check-input:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+.form-check-label {
+  color: #fff !important;
+  font-size: .85rem;
+}
+
+.btn {
+  font-weight: 600;
+  font-size: .9rem;
+  padding: .4rem .8rem;
+  border-radius: 4px;
+  transition: all .2s;
+}
+.btn-sm { font-size: .8rem; padding: .3rem .6rem; }
+.btn-primary { background: var(--accent); border: none; }
+.btn-primary:hover { background: #1f6feb; transform: translateY(-1px); }
+.btn-success { background: var(--success); border: none; }
+.btn-danger { background: var(--danger); border: none; }
+.btn-warning { background: var(--warning); border: none; }
+.btn-info { background: #0d6efd; border: none; }
+.btn-outline-light {
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-outline-light:hover {
+  background: rgba(88,166,255,.15);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 6px;
+  padding: 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255,255,255,.02);
+  transition: all .2s;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--accent);
+  background: rgba(88,166,255,.1);
+}
+.upload-zone i { font-size: 1.4rem; }
+.upload-instructions { margin-top: .5rem; font-size: .9rem; }
+.upload-instructions small { color: var(--text-muted); }
+
+.status-badge {
+  font-weight: 700;
+  font-size: .8rem;
+  padding: .3em .6em;
+}
+audio { height: 38px; width: 100%; border-radius: 4px; }
+.audio-player small {
+  font-size: .75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 4px;
+}
+
+.progress { border-radius: 4px; }
+.progress-bar { transition: width .3s ease; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.7; } }
+.animate-pulse { animation: pulse 1s infinite; }
+
+small.text-muted { font-size: .75rem; }
+.font-monospace { font-family: 'Courier New', monospace; }
+
+@media (max-width:768px) {
+  .btn { width:100%; margin-bottom:.5rem; }
+  .quick-settings .col-6 { width: 50%; }
+}
+
+.preset-group { gap: .25rem; }
+.preset-select { width: auto; }
+.preset-input { width: 120px; }
+.whisper-controls { gap: .25rem; }
+.device-select { width: 80px; }
+.device-input { width: 50px; }
+
+.upload-card h5 { margin-bottom: .75rem; }
+.upload-status { font-size: .85rem; }
+
+.module-row { gap: 1rem; }
+.module-footer { gap: .5rem; }
+.quick-settings, .sliders-row { gap: .5rem; }
+.save-row .form-check { margin-right: .5rem; }
+.generate-row .small { line-height: 2; }
+.result-area { font-size: .85rem; }
+
+.audio-format-select { margin-bottom: .5rem; }
+.footer-spacer { height: 150px; }
+
+.module-row .card { height: 100%; }
+.module-row .card > div { flex: 1; }
+
+#builtinSection { display: none; }
+#acePrompt { font-size: 0.9rem; }
+.text-muted { color: var(--text-muted); }
+
+/* Settings Slide Toggle */
+.settings-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+  padding: 1rem;
+}
+
+.slide-panel:nth-child(2) {
+  transform: translateX(100%);
+}
+
+.settings-slider.show-settings .slide-panel:first-child {
+  transform: translateX(-100%);
+}
+
+.settings-slider.show-settings .slide-panel:nth-child(2) {
+  transform: translateX(0);
+}
+#audioDropZone.dragover {
+    background: #e3f2fd !important;
+    border-color: #2196F3 !important;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+}
+
+.drop-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+#audioDropZone:hover {
+    background: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.badge.bg-info { animation: pulse 2s infinite; }
+.badge.bg-danger { animation: none; }
+
+.text-muted {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* ============================================= */
+/* FINAL FIXES FOR LLM ROW (Chat + Slider)       */
+/* Restores original layout & empty chat height  */
+/* ============================================= */
+
+/* 1. Fix empty chat box collapsing (your main complaint) */
+#chatHistory {
+  min-height: 320px !important;     /* same height as before when empty */
+  background: #1e1e1e;              /* Work mode default */
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Ensure it stays tall even when completely empty */
+#chatHistory:empty::before {
+  content: "";
+  display: block;
+  min-height: 320px;
+}
+
+/* 2. Restore proper spacing and alignment in the center card */
+#chatHistory + div {
+  margin-top: 0.75rem !important;
+}
+
+/* 3. Fix mode-specific background switching */
+.settings-slider + .card #chatHistory,
+.card #chatHistory {
+  transition: background 0.3s ease;
+}
+
+/* 4. Make sure the whole center column uses full height properly */
+.col-lg-6 > .card {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;                     /* same as your inline style */
+  max-height: 80vh;
+}
+
+/* 5. Fix flex growth so input/buttons don't push chat up */
+.col-lg-6 > .card > div:not(#chatHistory) {
+  flex-shrink: 0;
+}
+
+/* 6. Optional: Slightly better empty state appearance */
+#chatHistory:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+#chatHistory:empty::after {
+  content: "Start a new conversation...";
+  opacity: 0.6;
+}
+
+/* 7. Ensure sliders and buttons in left panel don't stretch weirdly */
+.settings-slider .slide-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 8. Final override for any conflicting rules */
+#chatHistory {
+  flex-grow: 1 !important;
+  flex-shrink: 1 !important;
+}
+
+
+
+/* Beautiful pill toggle – pure CSS */
+.toggle-label {
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 2;
+}
+
+/* ==== UNIVERSAL CENTER SLIDER – WORKS FOR ALL ROWS (XTTS, Fish, Kokoro, Stable, Ace) ==== */
+.center-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.center-slider .center-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;                    /* same padding as before */
+}
+
+.center-slider .center-panel:nth-child(2) {
+  transform: translateX(100%);
+}
+
+.center-slider.show-api .center-panel:first-child {
+  transform: translateX(-100%);
+}
+
+.center-slider.show-api .center-panel:nth-child(2) {
+  transform: translateX(0);
+}
+
+/* ==== CLEAN COLLAPSIBLE ROWS – DARK THEME (matches your app perfectly) ==== */
+.collapsible-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem !important;
+}
+
+.collapsible-row.collapsed {
+  height: 52px;
+}
+
+.row-toggle {
+  height: 52px;
+  background: #1e252f;
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.2s;
+}
+
+.row-toggle:hover {
+  background: #2a323d;
+}
+
+.toggle-text {
+  font-size: 1.05rem;
+  color: #58a6ff;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  color: #8b949e;
+}
+
+.collapsible-row.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.row-content {
+  transition: all 0.35s ease;
+}
+
+.collapsible-row.collapsed .row-content {
+  height: 0;
+  overflow: hidden;
+  padding: 0 !important;
+  opacity: 0;
+}
+
+/* ——————————————————————————
+   XTTS API JSON PANEL – FINAL, CLEAN, 100% WORKING
+   —————————————————————————— */
+.center-slider .json-codebox {
+  flex: 1;
+  overflow: auto;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.89rem;
+  line-height: 1.5;
+}
+
+.center-slider #jsonDisplay {
+  color: #f0f6fc;
+  margin: 0;
+  white-space: pre;
+  font-family: 'Courier New', monospace;
+  user-select: text;
+  cursor: text;
+}
+
+/* Copy button – silent feedback */
+#copyJsonBtn.copied {
+  background-color: #238636 !important;
+  border-color: #238636 !important;
+}
+#copyJsonBtn.copied span { display: none; }
+#copyJsonBtn.copied::after {
+  content: "Copied!";
+  color: white;
+  font-weight: 600;
+}
+
+/* NEW: Force slider height to match content */
+.center-slider {
+  min-height: 300px; /* Adjust this to match your typical row height if needed */
+}
+
+/* NEW: Force the card to have full height */
+.col-lg-6 > .card {
+  min-height: 500px !important; 
+}
+
+.center-slider .json-codebox pre {
+  margin: 0;
+  white-space: pre-wrap !important;      /* ← Soft wrap – lines wrap cleanly */
+  word-break: normal !important;         /* ← Don't break words weirdly */
+  overflow-wrap: anywhere;               /* ← Modern, smart wrapping */
+}
+
+.center-slider .json-codebox code {
+  font-family: 'Courier New', Consolas, 'Lucida Console', monospace !important;
+  font-size: 0.89rem;
+  line-height: 1.5;
+  color: #f0f6fc;
+  background: transparent;
+  display: block;
+}
+
+.links-card { padding: 22px; background: #1a1a26; border-radius: 12px; }
+.links-inner h3 { color: #00d4aa; margin: 30px 0 12px 0; font-size: 1.35em; border-bottom: 1px solid #333; padding-bottom: 6px; }
+.links-inner h3:first-child { margin-top: 0; }
+.links-list { list-style: none; padding: 0; margin: 12px 0; }
+.links-list li { margin: 18px 0; padding-left: 4px; }
+.links-list a { color: #6ee7b7; text-decoration: none; }
+.links-list a:hover { text-decoration: underline; color: #00ff9d; }
+.links-footer { margin-top: 32px; font-size: 0.95em; opacity: 0.85; text-align: center; color: #aaa; }
+
+/* Master Cheat Sheet – Full Detail Version */
+.master-card h5 { color: #fff !important; font-weight: 700; }
+.master-card .text-cyan { color: #58a6ff !important; }
+.master-card .text-info { color: #6ee7b7 !important; }
+.master-card .text-success { color: #00ff9d !important; }
+.master-card .text-danger { color: #ff6b6b !important; }
+.master-card .text-warning { color: #d29922 !important; }
+.master-card .text-white-50 { opacity: 0.8; }
+.master-card table { font-size: 0.9rem; }
+.master-card th { background: #2a2a3a; }
+.master-card code { background: #333; padding: 2px 6px; border-radius: 4px; }
+.tagline { color: #6ee7b7; margin: 4px 0 12px; font-weight: bold; }
+.settings, .tips { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.settings th { background: #2a2a3a; padding: 8px; text-align: left; }
+.settings td { padding: 8px; border-bottom: 1px solid #444; }
+.settings td:nth-child(2) { color: #00ff9d; font-weight: bold; }
+.proscons { margin-top: 12px; line-height: 1.6; }
+.notes { margin-top: 12px; background: #2a1e2e; padding: 12px; border-radius: 6px; font-size: 0.95em; }
+.final { background: linear-gradient(135deg, #2a1e2e, #1e2a2e) !important; border: 2px solid #444; }
+.final h3 { color: #ff6b6b; }
+.tips li { margin: 8px 0; }
+.tips code { background: #333; padding: 2px 6px; border-radius: 4px; }
+/* FINAL ELEGANT DIVIDER – DARK, CLASSY, PERFECT WIDTH */
+.elegant-divider {
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 5%,
+        #30363d 20%,
+        #444857 50%,
+        #30363d 80%,
+        transparent 95%,
+        transparent 100%
+    );
+    margin: 60px 0 70px 0;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle inner glow – makes it pop just enough on pure black */
+.elegant-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: rgba(88, 166, 255, 0.15);
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
+}

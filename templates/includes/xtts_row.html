@@ -1,0 +1,236 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-mic me-2"></i>
+        <span class="toggle-text">XTTS-v2 TTS</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+
+    <div class="row-content">
+        <div class="row g-3 mb-4">
+            <!-- LEFT: Voice Selection + Load/Unload (unchanged) -->
+            <div class="col-lg-3">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="settings-slider">
+                        <!-- MAIN PANEL: Voice + Load -->
+                        <div class="slide-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 text-white d-flex align-items-center gap-2">
+                                    Voice Mode (XTTS)
+                                </h5>
+                                <button class="btn btn-sm btn-outline-light show-settings">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+
+                            <div class="d-flex gap-2 mb-2">
+                                <button id="modeCloned" class="btn btn-light flex-fill btn-sm">Cloned</button>
+                                <button id="modeBuiltin" class="btn btn-outline-light flex-fill btn-sm">
+                                    Built-in
+                                </button>
+                            </div>
+
+                            <div id="clonedSection">
+                                <select id="voiceSelect" class="form-select form-select-sm mb-1"></select>
+                                <button id="refreshBtn" class="btn btn-outline-light w-100 btn-sm mb-2">
+                                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                                </button>
+                                <div id="xttsVoicePlayer" class="mb-3 audio-player"></div>
+                            </div>
+
+                            <div id="builtinSection" style="display: none">
+                                <select id="speakerSelect" class="form-select form-select-sm mb-1"></select>
+                                <button id="refreshSpeakersBtn" class="btn btn-outline-light w-100 btn-sm mb-2">
+                                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                                </button>
+                                <div id="builtinVoicePlayer" class="mb-3 audio-player"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <select id="xttsDeviceSelect" class="form-select form-select-sm device-select">
+                                    <option value="cpu">CPU</option>
+                                    <option value="0" selected>0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+
+                                <div class="d-flex gap-1 align-items-center">
+                                    <button id="loadBtn" class="btn btn-success btn-sm">Load</button>
+                                    <button id="unloadBtn" class="btn btn-danger btn-sm" disabled>Unload</button>
+                                    <span id="statusBadge" class="badge bg-secondary status-badge ms-2"
+                                        >NOT LOADED</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GEAR PANEL: Inference Settings (moved here) -->
+                        <div class="slide-panel p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <button class="btn btn-sm btn-outline-light show-main">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <h5 class="mb-0">XTTS Inference Settings</h5>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small">Temperature</label>
+                                    <input
+                                        type="number"
+                                        step="0.05"
+                                        id="temp"
+                                        class="form-control form-control-sm"
+                                        value="0.65"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Repetition Penalty</label>
+                                    <input
+                                        type="number"
+                                        step="0.1"
+                                        id="repPen"
+                                        class="form-control form-control-sm"
+                                        value="2.1"
+                                    />
+                                </div>
+                            </div>
+
+                            <label class="form-label small"> Accuracy <span id="tolVal">0.80</span> </label>
+                            <input
+                                type="range"
+                                min="70"
+                                max="98"
+                                id="tolerance"
+                                class="form-range mb-3"
+                                value="80"
+                                oninput="document.getElementById('tolVal').textContent=(this.value/100).toFixed(2)"
+                            />
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="verifyWhisperXTTS" checked />
+                                <label class="form-check-label small">Verify with Whisper</label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="skipPostProcess" />
+                                <label class="form-check-label small">Skip Audio Processing (raw + trim only)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: -->
+            <!-- CENTER: XTTS — FIXED 100%, WRAPS PERFECTLY LIKE FISH & KOKORO -->
+            <div class="col-lg-6">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="center-slider xtts-center-slider">
+                        <!-- MAIN TEXT PANEL -->
+                        <div class="center-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Text to Speak</h5>
+                                <button type="button" class="btn btn-sm btn-outline-info show-xtts-api">
+                                    API Payload
+                                </button>
+                            </div>
+                            <textarea id="textInput" class="form-control flex-fill" rows="10"></textarea>
+                        </div>
+
+                        <!-- API PANEL — ONLY CHANGE: added style override directly on <pre> -->
+                        <div class="center-panel p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">API Payload Dictionary</h5>
+                                <div>
+                                    <button id="copyJsonBtn" class="btn btn-sm btn-outline-success me-2">
+                                        Copy DICT
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-light hide-xtts-api">
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="json-codebox flex-fill bg-dark rounded overflow-auto p-3 border">
+                                <pre
+                                    style="
+                                        white-space: pre-wrap !important;
+                                        word-break: normal !important;
+                                        overflow-wrap: anywhere;
+                                    "
+                                >
+            <code id="jsonDisplay" class="language-python"></code>
+          </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Only Audio & Output -->
+            <div class="col-lg-3">
+                <div class="card h-100 d-flex flex-column">
+                    <h5 class="mb-3">Audio & Output</h5>
+
+                    <label class="form-label small mb-1">Speed</label>
+                    <input type="number" step="0.1" id="speed" class="form-control form-control-sm mb-3" value="1.0" />
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small">Clean <span id="reverbVal">70</span>%</label>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                id="deReverb"
+                                class="form-range"
+                                value="70"
+                                oninput="document.getElementById('reverbVal').textContent=this.value"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small">De-ess <span id="deEssVal">0</span>%</label>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                id="deEss"
+                                class="form-range"
+                                value="0"
+                                oninput="document.getElementById('deEssVal').textContent=this.value"
+                            />
+                        </div>
+                    </div>
+
+                    <select id="xttsOutputFormat" class="form-select form-select-sm mb-2">
+                        <option value="wav">WAV</option>
+                        <option value="flac">FLAC</option>
+                        <option value="mp3">MP3</option>
+                        <option value="ogg">OGG</option>
+                        <option value="m4a">M4A</option>
+                    </select>
+
+                    <input
+                        type="text"
+                        id="savePath"
+                        class="form-control form-control-sm mb-3"
+                        placeholder="'Project', 'Project\SubDirectory'"
+                    />
+
+                    <div class="d-flex gap-2 mb-2">
+                        <button id="genBtn" class="btn btn-primary flex-fill">Generate</button>
+                        <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+                    </div>
+                    <span id="genStatus" class="text-white small d-block mb-2"></span>
+
+                    <div id="result" class="flex-fill overflow-auto result-area"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

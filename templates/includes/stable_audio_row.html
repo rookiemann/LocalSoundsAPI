@@ -1,0 +1,330 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-file-music me-2"></i>
+        <span class="toggle-text">Stable Audio Music/SFX</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+    <div class="row-content">
+        <div class="row g-3 mb-4">
+            <!-- LEFT: Model Panel + Settings Toggle -->
+            <div class="col-lg-3">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="settings-slider">
+                        <!-- MAIN PANEL (visible by default) -->
+                        <div class="slide-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 text-white d-flex align-items-center gap-2">
+                                    Stable Audio Model
+                                </h5>
+                                <button class="btn btn-sm btn-outline-light show-settings">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+
+                            <!-- Quick Prompt Templates — stay visible (very useful) -->
+                            <div class="mb-3">
+                                <small class="text-muted d-block mb-1">Quick Prompt Templates:</small>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('music_deep_house')"
+                                    >
+                                        <i class="bi bi-music-note-beamed"></i> Deep House
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('music_hiphop')"
+                                    >
+                                        <i class="bi bi-music-note-beamed"></i> Hip-Hop
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('music_cinematic')"
+                                    >
+                                        <i class="bi bi-film"></i> Cinematic
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('sfx_impact')"
+                                    >
+                                        <i class="bi bi-boom"></i> Impact
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('sfx_ambient')"
+                                    >
+                                        <i class="bi bi-cloud-haze2"></i> Ambient
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-light"
+                                        onclick="loadTemplate('sfx_explosion')"
+                                    >
+                                        <i class="bi bi-fire"></i> Explosion
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="clearPrompts()"
+                                    >
+                                        <i class="bi bi-trash"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <select
+                                    id="stableDeviceSelect"
+                                    class="form-select form-select-sm device-select"
+                                    data-tooltip-id="stableDeviceSelect"
+                                >
+                                    <option value="0" selected>0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+
+                                <div class="d-flex gap-1">
+                                    <button
+                                        id="stableLoadBtn"
+                                        class="btn btn-success btn-sm"
+                                        data-tooltip-id="stableLoadBtn"
+                                    >
+                                        Load
+                                    </button>
+                                    <button
+                                        id="stableUnloadBtn"
+                                        class="btn btn-danger btn-sm"
+                                        disabled
+                                        data-tooltip-id="stableUnloadBtn"
+                                    >
+                                        Unload
+                                    </button>
+                                </div>
+                                <span id="stableStatusBadge" class="badge bg-secondary status-badge">NOT LOADED</span>
+                            </div>
+                        </div>
+
+                        <!-- GEAR PANEL: Advanced Settings -->
+                        <div class="slide-panel p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <button class="btn btn-sm btn-outline-light show-main">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <h5 class="mb-0">Stable Audio Advanced Settings</h5>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Steps <span id="stableStepsVal" class="text-white">100</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="10"
+                                        max="200"
+                                        step="10"
+                                        id="stableSteps"
+                                        class="form-range"
+                                        value="100"
+                                        oninput="document.getElementById('stableStepsVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Length <span id="stableLengthVal" class="text-white">30.0</span>s</label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="10"
+                                        max="47"
+                                        step="0.5"
+                                        id="stableLength"
+                                        class="form-range"
+                                        value="30"
+                                        oninput="document.getElementById('stableLengthVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Guidance <span id="stableGuidanceScaleVal" class="text-white">7.0</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="20"
+                                        step="0.1"
+                                        id="stableGuidanceScale"
+                                        class="form-range"
+                                        value="7"
+                                        oninput="document.getElementById('stableGuidanceScaleVal').textContent=this.value"
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small"
+                                        >Eta <span id="stableEtaVal" class="text-white">0.0</span></label
+                                    >
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="1"
+                                        step="0.1"
+                                        id="stableEta"
+                                        class="form-range"
+                                        value="0"
+                                        oninput="document.getElementById('stableEtaVal').textContent=this.value"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small">Seed</label>
+                                    <input
+                                        type="number"
+                                        id="stableSeed"
+                                        class="form-control form-control-sm"
+                                        value="-1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. STABLE AUDIO – both textareas stay visible + working API panel -->
+            <!-- Keep this 100% unchanged — it works! -->
+            <div class="col-lg-6">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="center-slider stable-center-slider">
+                        <div class="center-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 d-flex align-items-center gap-2">
+                                    Prompt
+                                    <i class="bi bi-question-circle text-white" data-tooltip-id="stablePrompt"></i>
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-info show-stable-api">API Payload</button>
+                            </div>
+
+                            <textarea
+                                id="stablePrompt"
+                                class="form-control flex-fill mb-2 bg-dark text-white"
+                                rows="5"
+                            ></textarea>
+                            <textarea
+                                id="stableNegativePrompt"
+                                class="form-control bg-dark text-white"
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        <div class="center-panel p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">API Payload Dictionary</h5>
+                                <div>
+                                    <button id="copyStableJsonBtn" class="btn btn-sm btn-outline-success me-2">
+                                        Copy DICT
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-light hide-stable-api">
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea
+                                id="stableApiPayload"
+                                class="form-control flex-fill font-monospace"
+                                spellcheck="false"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Only Output Controls -->
+            <div class="col-lg-3">
+                <div class="card h-100 d-flex flex-column">
+                    <h5 class="mb-3">Generate</h5>
+
+                    <!-- Waveforms Amount -->
+                    <div class="mb-3">
+                        <label class="form-label small"
+                            >Waveforms <span id="stableNumWaveformsVal" class="text-white">3</span></label
+                        >
+                        <input
+                            type="range"
+                            min="1"
+                            max="4"
+                            step="1"
+                            id="stableNumWaveforms"
+                            class="form-range"
+                            value="3"
+                            oninput="document.getElementById('stableNumWaveformsVal').textContent=this.value"
+                        />
+                    </div>
+
+                    <!-- Audio Mode -->
+                    <div class="mb-3">
+                        <label class="form-label small">Audio Mode</label>
+                        <select id="stableAudioMode" class="form-select form-select-sm">
+                            <optgroup label="SFX">
+                                <option value="sfx_impact">Impact / Foley</option>
+                                <option value="sfx_ambient">Ambient / Field</option>
+                            </optgroup>
+                            <optgroup label="Music">
+                                <option value="music" selected>Jingle / Intro</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Output Format -->
+                    <div class="mb-3">
+                        <label class="form-label small">Format</label>
+                        <select id="stableOutputFormat" class="form-select form-select-sm">
+                            <option value="wav">WAV</option>
+                            <option value="flac">FLAC</option>
+                            <option value="mp3">MP3</option>
+                            <option value="ogg">OGG</option>
+                            <option value="m4a">M4A</option>
+                        </select>
+                    </div>
+
+                    <!-- Save Path -->
+                    <input
+                        type="text"
+                        id="stableSavePath"
+                        class="form-control form-control-sm mb-3"
+                        placeholder="'Project', 'Project\SubDirectory'"
+                        data-tooltip-id="stableSavePath"
+                    />
+
+                    <!-- Generate / Stop -->
+                    <div class="d-flex gap-2 mb-2">
+                        <button id="stableGenBtn" class="btn btn-primary flex-fill" data-tooltip-id="stableGenBtn">
+                            Generate
+                        </button>
+                        <button id="stableStopBtn" class="btn btn-danger" disabled data-tooltip-id="stableStopBtn">
+                            Stop
+                        </button>
+                    </div>
+                    <span id="stableGenStatus" class="text-white small d-block mb-2"></span>
+
+                    <!-- Result -->
+                    <div id="stableResult" class="flex-fill overflow-auto result-area"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

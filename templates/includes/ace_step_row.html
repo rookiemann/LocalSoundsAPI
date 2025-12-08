@@ -1,0 +1,264 @@
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-music-note-beamed me-2"></i>
+        <span class="toggle-text">ACE-Step Music</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+    <div class="row-content">
+        <div class="row g-3 mb-4">
+
+<div class="col-lg-3">
+    <div class="card h-100 position-relative overflow-hidden d-flex flex-column">
+        <div class="settings-slider flex-fill d-flex flex-column">
+            <div class="slide-panel active p-3 d-flex flex-column h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0 text-white d-flex align-items-center gap-2">
+                        ACE-Step Music
+                    </h5>
+                    <button class="btn btn-sm btn-outline-light show-settings">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block mb-1">ACE-Optimized Templates:</small>
+                    <div class="d-flex flex-wrap gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('edm')">EDM Drop</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('jazz')">Jazz</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('lofi')">Lo-Fi</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('hiphop')">Hip-Hop</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('rock')">Rock</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('pop')">Pop</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('rap')">Rap</button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="loadAceTemplate('rnb')">R&B</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearAcePrompt()">
+                            <i class="bi bi-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <select id="aceDeviceSelect" class="form-select form-select-sm device-select">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option> 
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+
+                    <div class="d-flex gap-1">
+                        <button id="aceLoadBtn" class="btn btn-success btn-sm">Load</button>
+                        <button id="aceUnloadBtn" class="btn btn-danger btn-sm" disabled>Unload</button>
+                    </div>
+                    <span id="aceStatusBadge" class="badge bg-secondary status-badge">NOT LOADED</span>
+                </div>
+            </div>
+
+            <div class="slide-panel p-3 d-flex flex-column" style="max-height: 100%; overflow-y: auto;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-sm btn-outline-light show-main">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                    <h5 class="mb-0 text-white">ACE-Step Inference Settings</h5>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small">Steps <span id="aceStepsVal">60</span></label>
+                        <input type="range" min="10" max="200" step="1" id="aceSteps" class="form-range" value="60"
+                               oninput="document.getElementById('aceStepsVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Duration <span id="aceDurationVal">10.0</span>s</label>
+                        <input type="range" min="1" max="60" step="0.5" id="aceDuration" class="form-range" value="10"
+                               oninput="document.getElementById('aceDurationVal').textContent=this.value"/>
+                    </div>
+                    <!-- ... all your other sliders exactly as you have them ... -->
+                    <div class="col-6">
+                        <label class="form-label small">Guidance <span id="aceGuidanceVal">3.5</span></label>
+                        <input type="range" min="1" max="10" step="0.1" id="aceGuidance" class="form-range" value="3.5"
+                               oninput="document.getElementById('aceGuidanceVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Omega <span id="aceOmegaVal">1.0</span></label>
+                        <input type="range" min="0.1" max="3" step="0.1" id="aceOmega" class="form-range" value="1"
+                               oninput="document.getElementById('aceOmegaVal').textContent=this.value"/>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small">Min Guidance <span id="aceMinGuidanceVal">1.0</span></label>
+                        <input type="range" min="0.1" max="5" step="0.1" value="1.0" id="aceMinGuidance" class="form-range"
+                               oninput="document.getElementById('aceMinGuidanceVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Guidance Interval <span id="aceGuidanceIntervalVal">0</span></label>
+                        <input type="range" min="0" max="100" step="1" value="0" id="aceGuidanceInterval" class="form-range"
+                               oninput="document.getElementById('aceGuidanceIntervalVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Guidance Decay <span id="aceGuidanceDecayVal">1.0</span></label>
+                        <input type="range" min="0.5" max="2" step="0.05" value="1.0" id="aceGuidanceDecay" class="form-range"
+                               oninput="document.getElementById('aceGuidanceDecayVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Guidance Text <span id="aceGuidanceTextVal">0.0</span></label>
+                        <input type="range" min="0" max="10" step="0.1" value="0" id="aceGuidanceText" class="form-range"
+                               oninput="document.getElementById('aceGuidanceTextVal').textContent=this.value"/>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">Guidance Lyric <span id="aceGuidanceLyricVal">0.0</span></label>
+                        <input type="range" min="0" max="10" step="0.1" value="0" id="aceGuidanceLyric" class="form-range"
+                               oninput="document.getElementById('aceGuidanceLyricVal').textContent=this.value"/>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small">Scheduler</label>
+                        <select id="aceScheduler" class="form-select form-select-sm">
+                            <option value="euler">euler</option>
+                            <option value="pingpong">pingpong</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">CFG Type</label>
+                        <select id="aceCfgType" class="form-select form-select-sm">
+                            <option value="cfg">cfg</option>
+                            <option value="ucfg">ucfg</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="aceErgTag" />
+                        <label class="form-check-label small text-white" for="aceErgTag">ERG Tag</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="aceErgLyric" />
+                        <label class="form-check-label small text-white" for="aceErgLyric">ERG Lyric</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="aceErgDiffusion" />
+                        <label class="form-check-label small text-white" for="aceErgDiffusion">ERG Diff</label>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small">Seed</label>
+                        <input type="number" id="aceSeed" class="form-control form-control-sm" value="-1" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">OSS Steps</label>
+                        <input type="text" id="aceOssSteps" class="form-control form-control-sm" placeholder="1,3,5" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+            <!-- ACE-STEP – FINAL, PERFECT LIKE XTTS -->
+            <div class="col-lg-6">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="center-slider ace-center-slider">
+                        <!-- MAIN PROMPT PANEL -->
+                        <div class="center-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 d-flex align-items-center gap-2">
+                                    Prompt (Style + Lyrics)
+                                    <i class="bi bi-question-circle text-white" data-tooltip-id="acePrompt"></i>
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-info show-ace-api">API Payload</button>
+                            </div>
+
+                            <textarea
+                                id="acePrompt"
+                                class="form-control flex-fill text-white bg-dark border-secondary font-monospace"
+                                rows="26"
+                                placeholder="edm drop, 128bpm, supersaw, punchy kick, sidechain, riser&#10;I'm on the edge, feel the drop&#10;Let it go, hands up high"
+                            ></textarea>
+                        </div>
+                        <div class="center-panel p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">API Payload Dictionary</h5>
+                                <div>
+                                    <button id="copyAceJsonBtn" class="btn btn-sm btn-outline-success me-2">
+                                        Copy DICT
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-light hide-ace-api">
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea
+                                id="aceApiPayload"
+                                class="form-control flex-fill font-monospace"
+                                spellcheck="false"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- RIGHT: Only Output Controls -->
+            <div class="col-lg-3">
+                <div class="card h-100 d-flex flex-column">
+                    <h5 class="text-white mb-3">Generate</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label small">Variants <span id="aceNumWaveformsVal">3</span></label>
+                        <input
+                            type="range"
+                            min="1"
+                            max="4"
+                            step="1"
+                            id="aceNumWaveforms"
+                            class="form-range"
+                            value="3"
+                            oninput="document.getElementById('aceNumWaveformsVal').textContent=this.value"
+                        />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small">Format</label>
+                        <select id="aceOutputFormat" class="form-select form-select-sm audio-format-select">
+                            <option value="wav">WAV</option>
+                            <option value="flac">FLAC</option>
+                            <option value="mp3">MP3</option>
+                            <option value="ogg">OGG</option>
+                            <option value="m4a">M4A</option>
+                        </select>
+                    </div>
+
+                    <input
+                        type="text"
+                        id="aceSavePath"
+                        class="form-control form-control-sm mb-3"
+                        placeholder="'Project', 'Project\SubDirectory'"
+                        data-tooltip-id="aceSavePath"
+                    />
+
+                    <div class="d-flex gap-2 mb-2">
+                        <button id="aceGenBtn" class="btn btn-primary flex-fill">Generate</button>
+                        <button id="aceStopBtn" class="btn btn-danger" disabled>Stop</button>
+                    </div>
+                    <span id="aceGenStatus" class="text-white small d-block mb-2"></span>
+
+                    <div id="aceResult" class="flex-fill overflow-auto result-area"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

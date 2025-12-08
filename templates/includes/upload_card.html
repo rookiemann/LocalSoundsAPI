@@ -1,0 +1,106 @@
+<!-- templates/includes/upload_card.html -->
+<div class="collapsible-row mb-4 collapsed">
+    <div class="row-toggle">
+        <i class="bi bi-cloud-arrow-up-fill me-2"></i>
+        <span class="toggle-text">Upload & Transcribe</span>
+        <i class="bi bi-chevron-down toggle-icon ms-auto"></i>
+    </div>
+    <div class="row-content">
+        <div class="row g-3 mb-4">
+            <!-- LEFT: Whisper Model (unchanged) -->
+            <div class="col-lg-3">
+                <div class="card h-100 d-flex flex-column p-3">
+                    <h5 class="mb-3">Whisper Model</h5>
+
+                    <select id="whisperDeviceSelect" class="form-select form-select-sm mb-2">
+                        <option value="cpu">CPU</option>
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+
+                    <div class="d-flex gap-2 mb-2">
+                        <button id="whisperLoadBtn" class="btn btn-success btn-sm flex-fill">Load Whisper</button>
+                        <button id="whisperUnloadBtn" class="btn btn-danger btn-sm flex-fill" disabled>Unload</button>
+                    </div>
+
+                    <div class="text-center">
+                        <span id="whisperStatusBadge" class="badge bg-secondary status-badge">NOT LOADED</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: Transcription Text + Audio Files panel -->
+            <div class="col-lg-6">
+                <div class="card h-100 position-relative overflow-hidden">
+                    <div class="center-slider upload-center-slider">
+                        <!-- MAIN: Transcription Text -->
+                        <div class="center-panel active p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Transcription</h5>
+                                <button type="button" class="btn btn-sm btn-outline-info show-upload-audio-files">
+                                    Audio Files
+                                </button>
+                            </div>
+
+                            <textarea
+                                id="transcriptionOutput"
+                                class="form-control flex-fill font-monospace"
+                                placeholder="Drop an audio file on the right → transcription appears here…"
+                                readonly
+                            ></textarea>
+
+                            <button id="copyTranscriptionBtn" class="btn btn-outline-light btn-sm mt-2 w-100">
+                                <i class="bi bi-clipboard"></i> Copy to Clipboard
+                            </button>
+                        </div>
+
+                        <div class="center-panel p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Uploaded Audio Files</h5>
+                                <button type="button" class="btn btn-sm btn-outline-light hide-upload-audio-files">
+                                    Back
+                                </button>
+                            </div>
+                            <select id="uploadedAudioSelect" class="form-select flex-fill mb-3" size="12"></select>
+                            <button id="transcribeSelectedBtn" class="btn btn-primary w-100">
+                                Transcribe Selected
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Dropzone + Auto Transcribe -->
+            <div class="col-lg-3">
+                <div class="card h-100 upload-card d-flex flex-column justify-content-center p-3">
+                    <h5 class="mb-3 text-center">Upload Voice Sample</h5>
+
+                    <label for="fileInput" id="uploadZone" class="upload-zone d-block text-center flex-fill mb-3">
+                        <i class="bi bi-cloud-upload" style="font-size: 2.5rem"></i>
+                        <div class="upload-instructions mt-3">
+                            Drop .wav, .flac, .mp3<br />
+                            <small class="text-muted">or click to select</small>
+                        </div>
+                    </label>
+                    <input type="file" id="fileInput" accept=".wav,.flac,.mp3" class="d-none" />
+
+                    <div class="form-check text-center">
+                        <input class="form-check-input" type="checkbox" id="autoTranscribe" />
+                        <label class="form-check-label small" for="autoTranscribe">Auto Transcribe on Upload</label>
+                    </div>
+
+                    <div id="uploadStatus" class="mt-3 text-center upload-status small"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
