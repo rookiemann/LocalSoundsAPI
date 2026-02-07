@@ -1,5 +1,7 @@
 # LocalSoundsAPI
 
+![License: MIT](https://img.shields.io/github/license/rookiemann/LocalSoundsAPI) ![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11-blue) ![Python](https://img.shields.io/badge/Python-Portable-green) ![Stars](https://img.shields.io/github/stars/rookiemann/LocalSoundsAPI)
+
 **The ultimate portable, offline all-in-one audio studio**  
 Text-to-Speech · Transcription - Subtitles - Music Generation · Sound Effects · Video Production · AI Chatbot
 
