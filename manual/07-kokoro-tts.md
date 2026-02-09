@@ -138,8 +138,6 @@ Kokoro uses eSpeak-ng for phoneme conversion. If a word is not in eSpeak's dicti
 
 ---
 
-> **Screenshot suggestions:**
-> 1. Kokoro section expanded with a voice selected (e.g., af_heart) and model loaded
-> 2. The voice dropdown open, showing the list of 19 available voices
-> 3. The gear settings panel showing Creativity, Diversity, and Accuracy controls
-> 4. A completed generation showing the fast completion time in the status text
+![Kokoro Voice section with generated audio](07-kokoro-tts.PNG)
+
+*Kokoro Voice with the "af sarah" voice loaded (green LOADED badge). A completed generation shows the audio player in the right column with playback controls and a Download button. Note the fast generation time -- Kokoro is the speed champion.*

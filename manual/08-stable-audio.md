@@ -159,8 +159,6 @@ Click **Stop** to cancel. Completed variants are preserved.
 
 ---
 
-> **Screenshot suggestions:**
-> 1. Stable Audio section expanded showing the prompt templates on the left and the prompt text areas in the center
-> 2. The gear settings panel open showing Steps, Length, Guidance, Eta, and Seed controls
-> 3. Multiple generated variants in the results area with CLAP scores visible, showing the ranked output
-> 4. The Audio Mode dropdown expanded showing the SFX and Music options
+![Stable Audio Music/SFX section](08-stable-audio.PNG)
+
+*The Stable Audio section showing Quick Prompt Templates (left), prompt and negative prompt text areas (center), and generation controls with Waveforms, Audio Mode, and Format settings (right). A deep house prompt is loaded with genre-specific keywords and a negative prompt filtering out unwanted qualities.*

@@ -201,7 +201,6 @@ See [Chapter 17: Launcher](17-launcher.md) for the full guide.
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The terminal/command prompt showing the successful startup output with the URL and tool verification messages
-> 2. The browser showing the app loaded for the first time
-> 3. The Launcher window showing detected GPUs and instance controls
+![Launcher Models & Tools tab](02-installation-launcher.PNG)
+
+*The Launcher's Models & Tools tab showing Python environment status, portable tools (all installed), HuggingFace token entry, and AI model download status.*

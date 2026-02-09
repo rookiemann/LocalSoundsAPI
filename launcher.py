@@ -343,6 +343,18 @@ class InstanceManager:
             if self._log_callback:
                 self._log_callback(f"{prefix} Process exited.")
 
+    @staticmethod
+    def _force_kill_pid(pid: int):
+        """Kill a process using PowerShell (reliable for CREATE_NO_WINDOW processes)."""
+        try:
+            subprocess.run(
+                ["powershell", "-NoProfile", "-Command",
+                 f"Stop-Process -Id {pid} -Force -ErrorAction SilentlyContinue"],
+                capture_output=True, timeout=15,
+            )
+        except Exception:
+            pass
+
     def _stop_process(self, state: InstanceState) -> bool:
         if state.process is None or state.process.poll() is not None:
             state.status = "Stopped"
@@ -350,24 +362,43 @@ class InstanceManager:
             return True
 
         pid = state.process.pid
+        port = state.config.port
+
+        # 1. Try graceful HTTP shutdown
         try:
-            subprocess.run(
-                ["taskkill", "/F", "/T", "/PID", str(pid)],
-                capture_output=True, timeout=15,
+            req = urllib.request.Request(
+                f"http://127.0.0.1:{port}/shutdown",
+                method="POST",
+                data=b"",
             )
+            urllib.request.urlopen(req, timeout=5)
         except Exception:
             pass
 
+        # Wait for graceful exit
+        try:
+            state.process.wait(timeout=4)
+        except subprocess.TimeoutExpired:
+            pass
+
+        # 2. Force kill if still running
         if state.process.poll() is None:
-            state.process.terminate()
+            if self._log_callback:
+                self._log_callback(f"Graceful shutdown failed for PID {pid}, force killing...")
+            self._force_kill_pid(pid)
             try:
-                state.process.wait(timeout=10)
+                state.process.wait(timeout=5)
             except subprocess.TimeoutExpired:
+                pass
+
+        # 3. Final fallback via Popen.kill()
+        if state.process.poll() is None:
+            try:
                 state.process.kill()
-                try:
-                    state.process.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    pass
+                state.process.wait(timeout=5)
+            except Exception:
+                if self._log_callback:
+                    self._log_callback(f"Warning: PID {pid} could not be killed")
 
         state.process = None
         state.status = "Stopped"
@@ -424,6 +455,9 @@ class LauncherApp:
                 self._log_system(f"Detected: {label}")
         else:
             self._log_system("No NVIDIA GPUs detected. CPU mode available.")
+
+        # Check for orphaned processes from previous sessions
+        self.root.after(500, self._check_orphaned_processes)
 
     # ------------------------------------------------------------------ styles
     def _setup_styles(self):
@@ -1061,6 +1095,65 @@ class LauncherApp:
             prefix = InstanceManager._make_prefix(s.config).strip("[]")
             values.append(prefix)
         self._filter_combo.config(values=values)
+
+    # =========================================================================
+    # Orphan Detection
+    # =========================================================================
+    def _check_orphaned_processes(self):
+        """Scan for LocalSoundsAPI processes left over from a previous session."""
+        try:
+            result = subprocess.run(
+                ["wmic", "process", "where", "name='python.exe'", "get",
+                 "processid,commandline"],
+                capture_output=True, text=True, timeout=10,
+            )
+            if result.returncode != 0:
+                return
+
+            orphans = []
+            for line in result.stdout.strip().split("\n"):
+                line = line.strip()
+                if not line or line.startswith("CommandLine"):
+                    continue
+                if "exec(open('main.py').read())" in line and "LocalSoundsAPI" in line:
+                    parts = line.rsplit(None, 1)
+                    if len(parts) < 2:
+                        continue
+                    try:
+                        pid = int(parts[-1])
+                    except ValueError:
+                        continue
+                    port = "?"
+                    if "--port" in line:
+                        try:
+                            idx = line.index("--port")
+                            port = line[idx:].split()[1]
+                        except (IndexError, ValueError):
+                            pass
+                    orphans.append((pid, port))
+
+            if not orphans:
+                return
+
+            pids_info = "\n".join(f"  PID {pid} (port {port})" for pid, port in orphans)
+            if messagebox.askyesno(
+                "Orphaned Processes Detected",
+                f"Found {len(orphans)} LocalSoundsAPI process(es) from a previous session:\n\n"
+                f"{pids_info}\n\n"
+                "Kill them?",
+            ):
+                for pid, port in orphans:
+                    try:
+                        InstanceManager._force_kill_pid(pid)
+                        self._log_system(f"Killed orphaned process PID {pid} (port {port})")
+                    except Exception as e:
+                        self._log_system(f"Failed to kill PID {pid}: {e}")
+            else:
+                for pid, port in orphans:
+                    self._log_system(f"Orphaned process detected: PID {pid} (port {port})")
+
+        except Exception:
+            pass
 
     # =========================================================================
     # Health Polling

@@ -177,8 +177,6 @@ Like Stable Audio, each variant is scored by CLAP and displayed ranked. Listen t
 
 ---
 
-> **Screenshot suggestions:**
-> 1. ACE-Step section expanded showing genre template buttons and the prompt area with style + lyrics
-> 2. The gear settings panel showing the full array of diffusion parameters (Steps, Duration, Guidance, Scheduler, etc.)
-> 3. Generated music variants in the results area with CLAP scores
-> 4. A template loaded (e.g., "Lo-Fi") showing the pre-filled prompt text
+![ACE-Step Music section](09-ace-step-music.PNG)
+
+*The ACE-Step section with genre template buttons (EDM Drop, Jazz, Lo-Fi, Hip-Hop, Rock, Pop, Rap, R&B) and a hip-hop prompt loaded. The first line defines the style (genre, BPM, instruments) and the remaining lines are lyrics. Right column shows Variants and Format controls.*

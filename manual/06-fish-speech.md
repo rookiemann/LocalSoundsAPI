@@ -132,8 +132,6 @@ Click **Stop** to cancel. Job recovery works the same as XTTS -- type `##recover
 
 ---
 
-> **Screenshot suggestions:**
-> 1. Fish Speech section expanded with a voice selected and model loaded
-> 2. The gear settings panel showing Temperature, Top P, Accuracy slider, and the Reference Style Prompt text area
-> 3. A generation in progress showing the status text with chunk progress
-> 4. The results area with a completed audio player after generation
+![Fish Speech Voice section](06-fish-speech.PNG)
+
+*The Fish Speech section with a voice reference selected (Alex_01.wav) and sample text entered. Left: voice selection with Refresh button, reference audio preview, and device/Load controls. Center: text input area. Right: audio output controls.*

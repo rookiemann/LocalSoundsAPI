@@ -161,9 +161,6 @@ Click **"API Payload"** in the center column to see the exact dictionary that wi
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The XTTS section expanded showing a voice selected in "Cloned" mode with the model loaded
-> 2. The gear panel open showing Temperature, Repetition Penalty, and Accuracy sliders
-> 3. A completed generation showing the audio player in the results area with the generation status
-> 4. The "Built-in" voice mode showing the speaker dropdown with the 59 built-in voices
-> 5. The API Payload panel showing the JSON dictionary
+![XTTS-v2 TTS section in Cloned mode](05-xtts-voice-cloning.PNG)
+
+*The XTTS-v2 section in Cloned voice mode. Left: voice selection with Cloned/Built-in toggle, reference audio preview player, and device/Load controls. Center: text input area with API Payload button. Right: Speed, Clean, De-ess sliders, output format, project path, and Generate/Stop buttons.*

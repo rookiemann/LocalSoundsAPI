@@ -106,7 +106,6 @@ This catches garbled audio, skipped words, and hallucinated content automaticall
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The Upload & Transcribe section expanded, showing the three-column layout with the upload dropzone visible
-> 2. The center column showing a completed transcription with the "Copy to Clipboard" button
-> 3. The Whisper model loaded (green status badge) with the device dropdown visible
+![Upload & Transcribe section](04-upload-and-transcribe.PNG)
+
+*The Upload & Transcribe section showing the Whisper model controls (left), transcription text area with Copy to Clipboard button (center), and the voice sample upload dropzone (right).*

@@ -159,9 +159,10 @@ When you close the launcher window:
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The launcher on first open with no instances -- showing the empty table, GPU dropdown with detected GPUs, and the dark log viewer
-> 2. The launcher with 2-3 instances in different states (Running, Stopped) -- showing the colored status and log output
-> 3. The Models & Tools tab showing a mix of Installed and Not Found models, with the tool status indicators
-> 4. The log viewer filtered to a single instance, showing Flask startup output with the instance prefix tags
-> 5. A model download in progress with the progress bar visible
+![Launcher Instances & Log tab](17-launcher.PNG)
+
+*The Instances & Log tab with a running instance on GPU 1 (RTX 3090) at port 5006. The log viewer shows Flask startup output, model loading, TTS generation, Whisper verification, and video creation -- all captured with timestamped [GPU1:5006] prefixes.*
+
+![Launcher Models & Tools tab](02-installation-launcher.PNG)
+
+*The Models & Tools tab showing the portable Python environment, tool status indicators (all green), HuggingFace token entry, and the AI model table with Installed/Not Found status for each model.*

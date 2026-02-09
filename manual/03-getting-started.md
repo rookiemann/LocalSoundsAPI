@@ -143,7 +143,6 @@ Congratulations! You've just generated your first AI speech.
 
 ---
 
-> **Screenshot suggestion:** Take three screenshots:
-> 1. The full page with all sections collapsed, showing the toolbar at top
-> 2. One section expanded (like Kokoro) showing the three-column layout clearly
-> 3. The settings gear panel slid open, showing inference parameters
+![Kokoro Voice section showing the three-column layout](03-getting-started-kokoro%20row.PNG)
+
+*The Kokoro Voice section expanded, demonstrating the standard three-column layout: inference settings (left), text input (center), and audio output controls (right).*

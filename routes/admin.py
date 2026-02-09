@@ -1,11 +1,11 @@
 # routes/admin.py
-import os, datetime, psutil, subprocess, pynvml
+import os, datetime, threading, psutil, subprocess, pynvml
 from flask import request, jsonify
 from . import bp
 from config import OUTPUT_DIR
 from models.xtts import unload_xtts
 from models.fish import unload_fish
-from models.whisper import unload_whisper 
+from models.whisper import unload_whisper
 
 def _kill_tree(pid):
     try:
@@ -26,14 +26,19 @@ def _terminate_lingering():
 @bp.route("/shutdown", methods=["POST"])
 def shutdown():
     print("[SHUTDOWN] Unloading models...")
-    unload_xtts()
-    unload_whisper() 
-    unload_fish()
-    _terminate_lingering()
+    try: unload_xtts()
+    except Exception as e: print(f"[SHUTDOWN] unload_xtts error: {e}")
+    try: unload_whisper()
+    except Exception as e: print(f"[SHUTDOWN] unload_whisper error: {e}")
+    try: unload_fish()
+    except Exception as e: print(f"[SHUTDOWN] unload_fish error: {e}")
+    try: _terminate_lingering()
+    except Exception as e: print(f"[SHUTDOWN] cleanup error: {e}")
 
-    func = request.environ.get("werkzeug.server.shutdown")
-    if func:
-        func()
-    else:
+    def _delayed_exit():
+        import time
+        time.sleep(0.5)
         os._exit(0)
+
+    threading.Thread(target=_delayed_exit, daemon=True).start()
     return jsonify({"message": "Server shutting down..."}), 200

@@ -171,10 +171,6 @@ Here's a typical end-to-end workflow combining multiple features:
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The Video Production Studio fully expanded showing all four rows
-> 2. Row 1 close-up: project folder field and the drag-and-drop zone
-> 3. Row 2 showing a populated project files list with an image preview on the right
-> 4. Row 3 showing transcription text in the text area
-> 5. Row 4 showing the resolution dropdown, background mode dropdown, and Create Video button
-> 6. The result area showing a completed video playing in the browser with the Download link
+![Video Production Studio](10-video-production.png)
+
+*The complete Video Production workflow. Top: project folder and file upload dropzone. Middle: project file list with audio preview, auto-transcribe options, and transcription output. Bottom: video creation settings (1080p, Solid Red Screen) and the finished video with burned-in subtitles playing in the browser.*

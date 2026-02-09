@@ -194,11 +194,6 @@ Larger context uses more memory but lets the AI reference older messages.
 
 ---
 
-> **Screenshot suggestions:**
-> 1. The Chatbot section expanded showing the three-column layout with a conversation in progress
-> 2. The left column with the Llama.cpp backend selected, showing model dropdown, context length, and GPU layers
-> 3. The left column switched to LM Studio backend, showing the proxy mode message
-> 4. The left column switched to OpenRouter backend, showing the model dropdown
-> 5. The gear settings panel showing Temperature, Max Tokens, Top P, Top K, and penalty sliders
-> 6. The right column showing the system prompt editor with a custom prompt loaded
-> 7. The history controls at the top of the center column (Clear/Save, Clear/Delete, Load old chat)
+![Chatbot section](11-chatbot.PNG)
+
+*The Chatbot with the Llama.cpp backend selected. Left: model selection (Qwen2.5-7B), context length slider, GPU layers control, and Load/Unload buttons. Center: conversation history with Clear/Save and Load old chat controls, plus the message input. Right: system prompt editor with a custom podcast script generator prompt and preset management.*

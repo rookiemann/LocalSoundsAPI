@@ -69,4 +69,10 @@ Flask Web Server (main.py, port 5006)
 
 ---
 
-> **Screenshot suggestion:** Take a wide screenshot of the full web interface with all sections collapsed, showing the section headers (Upload & Transcribe, XTTS-v2 TTS, Fish Speech Voice, Kokoro Voice, Stable Audio Music/SFX, ACE-Step Music, Video Production Studio, Chatbot). This gives readers an immediate sense of the app's scope and layout.
+![LocalSoundsAPI main interface with all sections collapsed](01-introduction-uncollapsed.png)
+
+*The main interface with all sections collapsed. Each section expands to reveal its controls.*
+
+![Full interface with all sections expanded](01-introduction-collapsed.png)
+
+*The complete interface with every section expanded, showing the full scope of features.*
