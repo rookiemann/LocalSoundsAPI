@@ -15,3 +15,5 @@ projects_output/
 __pycache__/
 *.pyc
 *.log
+models/*.pt
+.claude/
