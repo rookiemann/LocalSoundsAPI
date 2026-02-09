@@ -11,7 +11,6 @@
 | RAM | 8 GB |
 | Storage | 100 GB free SSD space |
 | GPU | Optional -- CPU mode works but is much slower |
-| Python | 3.9 or newer |
 
 ### Recommended
 
@@ -39,41 +38,42 @@ Not all models need to be loaded at once. Load what you need, unload when done.
 | CLAP (audio scoring) | ~1 GB |
 | Llama.cpp LLM | Varies by model size |
 
-## Step-by-Step Installation
+## Step-by-Step Installation (Fully Portable)
 
-### 1. Clone the Repository
+LocalSoundsAPI uses a **portable Python environment** with all dependencies pre-built and bundled together. This isn't a standard `pip install` setup -- the dozens of libraries (PyTorch with CUDA, audio processing, ML frameworks, etc.) have been carefully assembled to work together without conflicts. A raw `pip install -r requirements.txt` will not produce a working environment.
+
+### 1. Download the Repository
 
 ```
 git clone https://github.com/rookiemann/LocalSoundsAPI.git
 cd LocalSoundsAPI
 ```
 
-Or download and extract the ZIP from the GitHub releases page.
+Or go to the main repo page, click **Code -> Download ZIP**, and extract it to any folder.
 
-### 2. Create a Python Virtual Environment (Recommended)
+### 2. Download and Extract the Portable Python Environment
 
-Using a virtual environment keeps LocalSoundsAPI's dependencies isolated from your other Python projects.
+Go to [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) and download **`portable-python-env-v1.7z`**.
 
-```
-python -m venv venv
-venv\Scripts\activate
-```
-
-You'll know it's working when your terminal prompt shows `(venv)` at the beginning.
-
-### 3. Install Python Dependencies
+Extract it **directly into your project folder** -- it creates the `python/` subfolder containing a complete Python 3.11 installation with every dependency pre-installed (PyTorch + CUDA, Flask, audio libraries, ML frameworks, and more).
 
 ```
-pip install -r requirements.txt
+LocalSoundsAPI/
+  python/          <-- extracted from portable-python-env-v1.7z
+    python.exe
+    Scripts/
+    Lib/
+    DLLs/
+    ...
 ```
 
-This installs Flask, PyTorch, audio processing libraries, and other required packages. On a fresh install, this may take several minutes.
+This portable Python is completely isolated from any system Python you may have. No PATH changes, no conflicts, no virtual environments needed.
 
-**Note:** PyTorch with CUDA support is required for GPU acceleration. If `pip install` gives you a CPU-only PyTorch, visit [pytorch.org](https://pytorch.org/get-started/locally/) for the correct install command for your CUDA version.
+### 3. Download and Extract Portable Tools
 
-### 4. Portable Tools (FFmpeg, RubberBand, eSpeak-ng)
+From the same [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) page, download **`bin.zip`**.
 
-LocalSoundsAPI expects these tools in the `bin/` directory:
+Extract it **into the existing `bin/` folder** inside your project. This populates the three required external tools:
 
 ```
 bin/
@@ -82,14 +82,9 @@ bin/
   espeak-ng/        -- libespeak-ng.dll + espeak-ng-data/ (needed by Kokoro)
 ```
 
-If you already have these installed system-wide, you can update the paths in `config.py` to point to your existing installations.
+If you already have these tools installed system-wide, you can update the paths in `config.py` to point to your existing installations instead.
 
-If you don't have them, download:
-- **FFmpeg:** ffmpeg.org/download.html -- place the `bin` folder contents into `bin/ffmpeg/bin/`
-- **RubberBand:** breakfastquay.com/rubberband -- place `rubberband.exe` into `bin/rubberband/`
-- **eSpeak-ng:** github.com/espeak-ng/espeak-ng/releases -- place the DLL and data folder into `bin/espeak-ng/`
-
-### 5. AI Models (Auto-Download on First Use)
+### 4. AI Models (Auto-Download on First Use)
 
 You do **not** need to download models manually. When you click "Load" for any model in the web interface for the first time, it will automatically download from Hugging Face. This requires an internet connection.
 
@@ -107,7 +102,7 @@ models/
 
 The ACE-Step model is stored in `ACE-Step/models/ace_step/`.
 
-### 6. Configuration (config.py)
+### 5. Configuration (config.py)
 
 The main configuration file is `config.py` in the project root. Key settings you might want to change:
 
@@ -144,10 +139,16 @@ Set this to `False` if you want temporary files to persist between sessions.
 
 ## Verifying Your Installation
 
-Run the application:
+Launch the application using the batch file or launcher:
 
 ```
-python main.py
+launcher.bat
+```
+
+Or for a single instance:
+
+```
+(portable) LocalSoundsAPI-Single.bat
 ```
 
 You should see output like:
@@ -163,23 +164,17 @@ Open `http://127.0.0.1:5006` in your browser. If you see the LocalSoundsAPI inte
 
 ## Running on a Custom Port
 
+Use the Launcher to set the port per instance (see Chapter 17), or use the multi-instance batch file:
+
 ```
-python main.py --port 8080
+(portable) LocalSoundsAPI-Multi.bat
 ```
 
-This starts the server on port 8080 instead of the default 5006.
+This prompts you for the number of instances and the starting port, then launches each one in a separate window.
 
 ## Running Multiple Instances
 
-You can run multiple instances on different ports for true parallel processing:
-
-```
-python main.py --port 5006
-python main.py --port 5007
-python main.py --port 5008
-```
-
-Each instance is independent and can load different models.
+Multiple instances run on different ports for true parallel processing. Each instance is independent and can load different models. The easiest way to manage multiple instances is through the **Launcher** (see Chapter 17), which gives you a single window to start, stop, and monitor all instances.
 
 ## Using the Launcher (Recommended)
 
