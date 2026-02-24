@@ -20,6 +20,20 @@
                                     <i class="bi bi-gear"></i>
                                 </button>
                             </div>
+                            <select id="kokoroLanguageSelect" class="form-select form-select-sm mb-2">
+                                <option value="a" selected>American English</option>
+                                <option value="b">British English</option>
+                                <option value="e">Spanish</option>
+                                <option value="f">French</option>
+                                <option value="h">Hindi</option>
+                                <option value="i">Italian</option>
+                                <option value="j">Japanese</option>
+                                <option value="p">Brazilian Portuguese</option>
+                                <option value="z">Mandarin Chinese</option>
+                            </select>
+                            <input type="hidden" id="kokoroLang" value="a" />
+                            <span id="kokoroLangDisplay" class="d-none"></span>
+
                             <select
                                 id="kokoroVoiceSelect"
                                 class="form-select form-select-sm mb-2"
@@ -167,7 +181,7 @@
                                 id="kokoroTextInput"
                                 class="form-control flex-fill"
                                 rows="10"
-                                placeholder="Enter English text…"
+                                placeholder="Enter text…"
                             ></textarea>
                         </div>
 

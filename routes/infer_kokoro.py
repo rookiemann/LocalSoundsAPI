@@ -59,25 +59,25 @@ def is_cancelled() -> bool:
 
 @bp.route("/kokoro_status", methods=["GET"])
 def kokoro_status():
-    loaded = kokoro_mod.model_loaded
+    loaded = bool(kokoro_mod.model_loaded)
     device = kokoro_mod.device_id if loaded else None
     return jsonify({
         "loaded": loaded,
         "device": device,
-        "model": "kokoro"
+        "model": "kokoro",
+        "loaded_languages": list(kokoro_mod.pipelines.keys())
     })
 
 
 @bp.route("/kokoro_voices", methods=["GET"])
 def kokoro_voices():
-    ENGLISH_VOICES = [
-        "af_heart", "af_alloy", "af_aoede", "af_bella", "af_jessica", "af_kore",
-        "af_nicole", "af_nova", "af_river", "af_sarah", "af_sky",
-        "am_adam", "am_echo", "am_eric", "am_fenrir", "am_liam", "am_michael",
-        "am_onyx", "am_puck", "am_santa"
-    ]
-    print(f"[{_ts()} KOKORO] Voices request → {len(ENGLISH_VOICES)} English voices")
-    return jsonify({"voices": ENGLISH_VOICES})
+    all_voices = kokoro_mod.ALL_VOICES
+    total = sum(len(v) for v in all_voices.values())
+    print(f"[{_ts()} KOKORO] Voices request → {total} voices across {len(all_voices)} languages")
+    return jsonify({
+        "voices": all_voices,
+        "lang_names": kokoro_mod.LANG_NAMES
+    })
 
 
 @bp.route("/kokoro_stop", methods=["POST"]) 
@@ -240,16 +240,21 @@ def kokoro_infer():
     voice = d.get("voice", "af_heart")
     max_retries = int(d.get("auto_retry", KOKORO_AUTO_TRIGGER_JOB_RECOVERY_ATTEMPTS))
     tolerance = float(d.get("tolerance", 80))
+
+    # Derive lang_code from voice prefix (first character)
+    lang_code = voice[0].lower() if voice else "a"
+    whisper_lang = kokoro_mod.LANG_TO_WHISPER.get(lang_code, "en")
+
     # ——————— GENERATION — SINGLE ATTEMPT ———————
     sr = 24000
     audio_parts = []
     try:
         # ← REQUIRED: disables gradients, saves VRAM, speeds up inference
         with torch.no_grad():
-            # Load models once (lazy)
-            if not kokoro_mod.model_loaded:
+            # Ensure pipeline is loaded for the correct language
+            if not kokoro_mod.pipelines:
                 dev = resolve_device(d.get("kokoroDeviceSelect") or "cpu")
-                kokoro_mod.load_kokoro(dev)
+                kokoro_mod.load_kokoro(dev, lang_code=lang_code)
 
             verify_whisper = d.get("verify_whisper", False)
             skip_post_process = d.get("skip_post_process", False)
@@ -274,7 +279,8 @@ def kokoro_infer():
                 while True:
                     try:
                         # ——— KOKORO INFERENCE ———
-                        gen = kokoro_mod.pipeline(chunk, voice=voice, speed=speed)
+                        pipe = kokoro_mod.get_pipeline(lang_code)
+                        gen = pipe(chunk, voice=voice, speed=speed)
                         raw_audio = np.concatenate([c for _, _, c in gen], axis=0)
                         raw_audio = np.concatenate([
                             np.zeros(int(sr * KOKORO_FRONT_PAD), dtype=np.float32),
@@ -300,8 +306,8 @@ def kokoro_infer():
                         if verify_whisper:
                             if not verify_with_whisper(
                                 processed, chunk,
-                                d.get("language", "en"),   # ← fixed
-                                tolerance,                 # ← fixed
+                                whisper_lang,              # ← derived from voice prefix
+                                tolerance,
                                 job_file, i
                             ):
                                 handle_save(processed, None, "kokoro", always_save_fails=True)

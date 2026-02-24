@@ -14,6 +14,7 @@ export function initFishGenerate() {
       speed:              +document.getElementById("fishSpeed").value || 1.0,
       fishTemp:           +document.getElementById("fishTemp").value || 0.7,
       fishTopP:           +document.getElementById("fishTopP").value || 0.7,
+      language:           document.getElementById("fishLanguage").value,
       tolerance:          +document.getElementById("fishTolerance").value || 80,
       de_reverb:          +document.getElementById("fishDeReverb").value / 100,
       de_ess:             +document.getElementById("fishDeEss").value || 0,
@@ -146,7 +147,7 @@ export function initFishGenerate() {
         text:                document.getElementById("fishTextInput")?.value.trim() || "",
         voice:               document.getElementById("fishVoiceSelect")?.value || "",
         ref_text:            document.getElementById("fishRefText")?.value.trim() || "",
-        language:            "en",                                                            // ← kept
+        language:            document.getElementById("fishLanguage")?.value || "en",
         fishTemp:            +(document.getElementById("fishTemp")?.value) || 0.7,
         fishTopP:            +(document.getElementById("fishTopP")?.value) || 0.7,
         speed:               +(document.getElementById("fishSpeed")?.value) || 1.0,
@@ -176,7 +177,7 @@ export function initFishGenerate() {
       if (typeof hljs !== "undefined") { codeEl.classList.add("language-python"); hljs.highlightElement(codeEl); }
     }
 
-    const selectors = "#fishTextInput,#fishVoiceSelect,#fishRefText,#fishTemp,#fishTopP,#fishSpeed,#fishTolerance,#fishDeReverb,#fishDeEss,#fishOutputFormat,#fishSavePath,#verifyWhisperFish,#whisperDeviceSelect,#fishDeviceSelect,#skipPostProcessFish";
+    const selectors = "#fishTextInput,#fishVoiceSelect,#fishRefText,#fishTemp,#fishTopP,#fishSpeed,#fishTolerance,#fishDeReverb,#fishDeEss,#fishOutputFormat,#fishSavePath,#verifyWhisperFish,#whisperDeviceSelect,#fishDeviceSelect,#skipPostProcessFish,#fishLanguage";
     document.querySelectorAll(selectors).forEach(el => {
       el.addEventListener("input", updateDisplay);
       el.addEventListener("change", updateDisplay);

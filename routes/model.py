@@ -97,8 +97,9 @@ def fish_unload():
 @bp.route("/kokoro_load", methods=["POST"])
 def kokoro_load():
     device = request.json.get("device") or "cpu"
+    lang_code = request.json.get("lang_code", "a")
     resolved = resolve_device(device)
-    success, msg = kokoro_mod.load_kokoro(resolved)
+    success, msg = kokoro_mod.load_kokoro(resolved, lang_code=lang_code)
     return jsonify({"message": msg}), 200 if success else 500
 
 @bp.route("/kokoro_unload", methods=["POST"])

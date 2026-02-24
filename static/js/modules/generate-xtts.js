@@ -25,6 +25,7 @@ export function initXTTSGenerate() {
       de_ess: document.getElementById("deEss").value,
       output_format: document.getElementById("xttsOutputFormat").value,
       save_path: document.getElementById("savePath").value.trim() || null,
+      language: document.getElementById("xttsLanguage").value,
       verify_whisper: document.getElementById("verifyWhisperXTTS").checked,
       skip_post_process: document.getElementById("skipPostProcess").checked,
       whisperDeviceSelect: document.getElementById("whisperDeviceSelect").value,
@@ -113,7 +114,7 @@ function payloadVoice() {
         text:                document.getElementById("textInput")?.value.trim() || "",
         mode:                document.getElementById("modeCloned")?.classList.contains("btn-light") ? "cloned" : "builtin",
         voice:               getVoice(),
-        language:            "en",                                                            // ← kept on purpose
+        language:            document.getElementById("xttsLanguage")?.value || "en",
         temperature:         +(document.getElementById("temp")?.value) || 0.65,
         repetition_penalty:  +(document.getElementById("repPen")?.value) || 2.1,
         speed:               +(document.getElementById("speed")?.value) || 1.0,
@@ -148,7 +149,7 @@ function updateDisplay() {
   }
 }
 
-    const selectors = "#textInput,#temp,#repPen,#speed,#tolerance,#deReverb,#deEss,#xttsOutputFormat,#savePath,#verifyWhisperXTTS,#whisperDeviceSelect,#xttsDeviceSelect,#voiceSelect,#speakerSelect,#modeCloned,#modeBuiltin,#skipPostProcess";
+    const selectors = "#textInput,#temp,#repPen,#speed,#tolerance,#deReverb,#deEss,#xttsOutputFormat,#savePath,#verifyWhisperXTTS,#whisperDeviceSelect,#xttsDeviceSelect,#voiceSelect,#speakerSelect,#modeCloned,#modeBuiltin,#skipPostProcess,#xttsLanguage";
     document.querySelectorAll(selectors).forEach(el => {
       el.addEventListener("input", updateDisplay);
       el.addEventListener("change", updateDisplay);

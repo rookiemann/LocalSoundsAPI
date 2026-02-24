@@ -6,6 +6,11 @@ export function initKokoroModel() {
   const loadBtn = document.getElementById("kokoroLoadBtn");
   const unloadBtn = document.getElementById("kokoroUnloadBtn");
   const badge = document.getElementById("kokoroStatusBadge");
+  const langSelect = document.getElementById("kokoroLanguageSelect");
+  const langInput = document.getElementById("kokoroLang");
+
+  // All voices grouped by lang_code, populated from API
+  let allVoices = {};
 
   function currentDevice() {
     return document.getElementById("kokoroDeviceSelect")?.value || "cpu";
@@ -26,25 +31,41 @@ export function initKokoroModel() {
     fetch("/kokoro_unload", { method: "POST" }).finally(() => setTimeout(poll, 800));
   };
 
-async function refreshVoices() {
-  try {
-    const res = await fetch("/kokoro_voices");
-    const data = await res.json();
-    const voices = data.voices || [];
-    
-    select.innerHTML = voices.map(v => 
+  function filterVoicesByLanguage(langCode) {
+    const voices = allVoices[langCode] || [];
+    select.innerHTML = voices.map(v =>
       `<option value="${v}">${v.replace(/_/g, " ")}</option>`
     ).join("");
-    
-    // Auto-select a nice default English voice
+
     if (voices.length > 0) {
-      select.value = "af_bella"; 
-      updatePlayer(select.value);
+      select.value = voices[0];
+      updatePlayer(voices[0]);
     }
-  } catch (err) {
-    console.error("Failed to load Kokoro voices", err);
+
+    // Sync hidden lang input
+    if (langInput) langInput.value = langCode;
   }
-}
+
+  async function refreshVoices() {
+    try {
+      const res = await fetch("/kokoro_voices");
+      const data = await res.json();
+      allVoices = data.voices || {};
+
+      // Filter to current language selection
+      const currentLang = langSelect ? langSelect.value : "a";
+      filterVoicesByLanguage(currentLang);
+    } catch (err) {
+      console.error("Failed to load Kokoro voices", err);
+    }
+  }
+
+  // Language dropdown change → filter voices
+  if (langSelect) {
+    langSelect.addEventListener("change", () => {
+      filterVoicesByLanguage(langSelect.value);
+    });
+  }
 
   function updatePlayer(voice) {
     player.innerHTML = `<small class="text-info">Voice: <code>${voice}</code></small>`;

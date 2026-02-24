@@ -3,30 +3,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const voiceSelect = document.getElementById("kokoroVoiceSelect");
   const langDisplay = document.getElementById("kokoroLangDisplay");
   const langInput   = document.getElementById("kokoroLang");
+  const langSelect  = document.getElementById("kokoroLanguageSelect");
 
-  if (!voiceSelect || !langDisplay || !langInput) {
-    // Kokoro row not on this page → nothing to do
+  if (!voiceSelect || !langInput) {
     return;
   }
 
-  const updateLanguage = () => {
-    const voice = voiceSelect.value || "";
-    const code = voice.charAt(0).toLowerCase(); // 'a', 'e', 'j', etc.
-    const langMap = {
-      a: "English",
-      e: "Spanish",
-      j: "Japanese"
-      // add more later if you ever enable them
-    };
-    const display = langMap[code] || "Unknown";
-    langDisplay.textContent = display;
-    langInput.value = code;
+  const langMap = {
+    a: "American English",
+    b: "British English",
+    e: "Spanish",
+    f: "French",
+    h: "Hindi",
+    i: "Italian",
+    j: "Japanese",
+    p: "Brazilian Portuguese",
+    z: "Mandarin Chinese"
   };
 
-  // Initial update
-  updateLanguage();
+  const updateLanguage = () => {
+    const voice = voiceSelect.value || "";
+    const code = voice.charAt(0).toLowerCase();
+    if (langDisplay) langDisplay.textContent = langMap[code] || "Unknown";
+    langInput.value = code;
 
-  // Update on every voice change
+    // Sync language dropdown to match selected voice
+    if (langSelect && langSelect.value !== code) {
+      langSelect.value = code;
+    }
+  };
+
+  updateLanguage();
   voiceSelect.addEventListener("change", updateLanguage);
 });
 
@@ -151,7 +158,7 @@ export function initKokoroGenerate() {
       return {
         text:               document.getElementById("kokoroTextInput")?.value.trim() || "",
         voice:              document.getElementById("kokoroVoiceSelect")?.value || "af_heart",
-        language:           "en",                                                             // ← kept
+        language:           document.getElementById("kokoroLanguageSelect")?.value || "a",
         speed:              +(document.getElementById("kokoroSpeed")?.value) || 1.0,
         temperature:        +(document.getElementById("kokoroTemp")?.value) || 0.7,
         top_p:              +(document.getElementById("kokoroTopP")?.value) || 0.9,
@@ -189,7 +196,7 @@ if (typeof hljs !== "undefined") {
       if (typeof hljs !== "undefined") { jsonDisplay.classList.add("language-python"); hljs.highlightElement(jsonDisplay); }
     }
 
-    const selectors = "#kokoroTextInput,#kokoroVoiceSelect,#kokoroSpeed,#kokoroTemp,#kokoroTopP,#kokoroTolerance,#kokoroDeReverb,#kokoroDeEss,#kokoroOutputFormat,#kokoroSavePath,#verifyWhisperKokoro,#whisperDeviceSelect,#kokoroDeviceSelect,#skipPostProcessKokoro";
+    const selectors = "#kokoroTextInput,#kokoroVoiceSelect,#kokoroSpeed,#kokoroTemp,#kokoroTopP,#kokoroTolerance,#kokoroDeReverb,#kokoroDeEss,#kokoroOutputFormat,#kokoroSavePath,#verifyWhisperKokoro,#whisperDeviceSelect,#kokoroDeviceSelect,#skipPostProcessKokoro,#kokoroLanguageSelect";
     document.querySelectorAll(selectors).forEach(el => {
       el?.addEventListener("input", updateDisplay);
       el?.addEventListener("change", updateDisplay);
