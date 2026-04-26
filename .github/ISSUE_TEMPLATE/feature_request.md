@@ -3,7 +3,7 @@ name: Feature Request
 about: Suggest a new feature or improvement
 title: "[Feature] "
 labels: enhancement
-assignees: rookiemann
+assignees: aivrar
 ---
 
 **What problem does this solve?**

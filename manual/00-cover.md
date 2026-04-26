@@ -10,7 +10,7 @@ Generate speech, clone voices, create music, produce sound effects, transcribe a
 
 ---
 
-**Repository:** github.com/rookiemann/LocalSoundsAPI
+**Repository:** github.com/aivrar/LocalSoundsAPI
 
 ---
 

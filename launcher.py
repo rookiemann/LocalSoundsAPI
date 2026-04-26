@@ -41,8 +41,8 @@ PORT_RANGE_START = 5006
 PORT_RANGE_END = 5099
 MAX_LOG_LINES = 5000
 
-BIN_ZIP_URL = "https://github.com/rookiemann/LocalSoundsAPI/releases/download/v1.0/bin.zip"
-PYTHON_7Z_URL = "https://github.com/rookiemann/LocalSoundsAPI/releases/download/v1.0/portable-python-env-v1.7z"
+BIN_ZIP_URL = "https://github.com/aivrar/LocalSoundsAPI/releases/download/v1.0/bin.zip"
+PYTHON_7Z_URL = "https://github.com/aivrar/LocalSoundsAPI/releases/download/v1.0/portable-python-env-v1.7z"
 
 # Tool existence checks
 TOOL_CHECKS = {

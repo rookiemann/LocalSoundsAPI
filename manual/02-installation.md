@@ -45,7 +45,7 @@ LocalSoundsAPI uses a **portable Python environment** with all dependencies pre-
 ### 1. Download the Repository
 
 ```
-git clone https://github.com/rookiemann/LocalSoundsAPI.git
+git clone https://github.com/aivrar/LocalSoundsAPI.git
 cd LocalSoundsAPI
 ```
 
@@ -53,7 +53,7 @@ Or go to the main repo page, click **Code -> Download ZIP**, and extract it to a
 
 ### 2. Download and Extract the Portable Python Environment
 
-Go to [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) and download **`portable-python-env-v1.7z`**.
+Go to [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) and download **`portable-python-env-v1.7z`**.
 
 Extract it **directly into your project folder** -- it creates the `python/` subfolder containing a complete Python 3.11 installation with every dependency pre-installed (PyTorch + CUDA, Flask, audio libraries, ML frameworks, and more).
 
@@ -71,7 +71,7 @@ This portable Python is completely isolated from any system Python you may have.
 
 ### 3. Download and Extract Portable Tools
 
-From the same [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) page, download **`bin.zip`**.
+From the same [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) page, download **`bin.zip`**.
 
 Extract it **into the existing `bin/` folder** inside your project. This populates the three required external tools:
 

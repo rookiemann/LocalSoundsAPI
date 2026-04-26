@@ -1,6 +1,6 @@
 # LocalSoundsAPI
 
-![License: MIT](https://img.shields.io/github/license/rookiemann/LocalSoundsAPI) ![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11-blue) ![Python](https://img.shields.io/badge/Python-Portable-green) ![Stars](https://img.shields.io/github/stars/rookiemann/LocalSoundsAPI)
+![License: MIT](https://img.shields.io/github/license/aivrar/LocalSoundsAPI) ![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11-blue) ![Python](https://img.shields.io/badge/Python-Portable-green) ![Stars](https://img.shields.io/github/stars/aivrar/LocalSoundsAPI)
 
 **The ultimate portable, offline all-in-one audio studio**
 Text-to-Speech · Transcription - Subtitles - Music Generation · Sound Effects · Video Production · AI Chatbot
@@ -53,7 +53,7 @@ Everything runs locally from one folder — no installation, no internet needed 
    Extract it to any folder you like (e.g., Desktop, Documents, or a USB drive). This is your main project folder.
 
 2. **Download the portable binaries from Releases**  
-   Go to [Releases](https://github.com/rookiemann/LocalSoundsAPI/releases/latest) and download:  
+   Go to [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) and download:  
    - `portable-python-env-v1.7z`  
    - `bin.zip`
 
