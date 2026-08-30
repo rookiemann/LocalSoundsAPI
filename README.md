@@ -58,6 +58,8 @@ Everything runs locally from one folder — no installation, no internet needed 
 
    You can also double-click **`launcher.bat`** immediately after cloning; if the required files are missing, it starts `install.bat` automatically.
 
+   **Manual fallback:** Download `portable-python-env-v1.7z` and `bin.zip` from the [v1.0 dependency bundle](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.0). Extract both archives into the LocalSoundsAPI project root. They create `python/` and populate `bin/` respectively.
+
 3. **Launch the app**
    - **Launcher GUI (recommended):**
      Double-click `launcher.bat`

@@ -85,9 +85,43 @@ bin/
   espeak-ng/        -- libespeak-ng.dll + espeak-ng-data/ (needed by Kokoro)
 ```
 
-If automatic setup is unavailable, download `portable-python-env-v1.7z` and `bin.zip` from the [v1.0 dependency bundle](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.0). Extract both into the project root; the archives create `python/` and populate `bin/` respectively.
+### 3. Manual Installation (Fallback)
 
-### 3. AI Models (Auto-Download on First Use)
+The original manual installation method remains fully supported if `install.bat` cannot be used.
+
+#### Download and Extract the Portable Python Environment
+
+Open the [v1.0 dependency bundle](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.0) and download **`portable-python-env-v1.7z`**.
+
+Extract it **directly into the LocalSoundsAPI project root**. It creates the `python/` folder shown above. This environment is complete and preconfigured; do not replace it with a raw `pip install -r requirements.txt` environment.
+
+#### Download and Extract the Portable Audio Tools
+
+From the same [v1.0 dependency bundle](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.0), download **`bin.zip`**.
+
+Extract it **directly into the LocalSoundsAPI project root**. The archive creates or populates:
+
+```
+bin/
+  ffmpeg/bin/       -- ffmpeg.exe, ffprobe.exe
+  rubberband/       -- rubberband.exe (for pitch/speed adjustment)
+  espeak-ng/        -- libespeak-ng.dll + espeak-ng-data/ (needed by Kokoro)
+```
+
+When extraction is complete, confirm these files exist:
+
+```
+python/python.exe
+bin/ffmpeg/bin/ffmpeg.exe
+bin/rubberband/rubberband.exe
+bin/espeak-ng/libespeak-ng.dll
+```
+
+The release also contains `lib.zip` and `triton.zip`. These are optional CUDA and Triton troubleshooting packages described in the v1.0 release notes; they are not required for a normal installation.
+
+If you already maintain compatible system-wide audio tools, you can instead update the paths in `config.py`, but the bundled versions are recommended for a predictable portable setup.
+
+### 4. AI Models (Auto-Download on First Use)
 
 You do **not** need to download models manually. When you click "Load" for any model in the web interface for the first time, it will automatically download from Hugging Face. This requires an internet connection.
 
@@ -105,7 +139,7 @@ models/
 
 The ACE-Step model is stored in `ACE-Step/models/ace_step/`.
 
-### 4. Configuration (config.py)
+### 5. Configuration (config.py)
 
 The main configuration file is `config.py` in the project root. Key settings you might want to change:
 

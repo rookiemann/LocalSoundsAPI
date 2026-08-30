@@ -324,7 +324,9 @@ try {
             "User-Agent" = "LocalSoundsAPI-one-click-installer"
             "X-GitHub-Api-Version" = "2022-11-28"
         }
-        $releases = @(Invoke-RestMethod -UseBasicParsing -Headers $headers -Uri $releasesApiUrl)
+        # Do not wrap Invoke-RestMethod in @(...). Windows PowerShell 5.1 treats
+        # its JSON array as one nested array when an array subexpression is used.
+        $releases = Invoke-RestMethod -UseBasicParsing -Headers $headers -Uri $releasesApiUrl
         $release = Get-CompatibleDependencyRelease -Releases $releases
         Write-Host "Dependency bundle release: $($release.tag_name)"
 
