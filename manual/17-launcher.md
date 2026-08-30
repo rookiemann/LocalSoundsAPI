@@ -12,7 +12,7 @@ launcher.bat
 
 This sets up the PATH for the portable Python environment, FFmpeg, and RubberBand, then opens the launcher window.
 
-> **Note:** The launcher requires the portable Python environment (`python\python.exe`) to be installed. If you're using a system Python or virtual environment instead, run `python launcher.py` directly.
+> **Note:** On a fresh clone, `launcher.bat` automatically starts the one-click installer when the portable Python environment or audio tools are missing. If you're using a system Python or virtual environment instead, run `python launcher.py` directly.
 
 ---
 

@@ -51,11 +51,20 @@ cd LocalSoundsAPI
 
 Or go to the main repo page, click **Code -> Download ZIP**, and extract it to any folder.
 
-### 2. Download and Extract the Portable Python Environment
+### 2. Run the One-Click Installer (Recommended)
 
-Go to [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) and download **`portable-python-env-v1.7z`**.
+Double-click **`install.bat`** in the project folder. The installer:
 
-Extract it **directly into your project folder** -- it creates the `python/` subfolder containing a complete Python 3.11 installation with every dependency pre-installed (PyTorch + CUDA, Flask, audio libraries, ML frameworks, and more).
+- Finds the newest compatible LocalSoundsAPI dependency bundle on GitHub
+- Downloads `portable-python-env-v1.7z` and `bin.zip` (about 2.1 GB total)
+- Verifies each download against the SHA-256 digest published by GitHub
+- Extracts the portable Python environment and audio tools into the correct locations
+- Opens the Launcher when setup is complete
+- Resumes an interrupted download when possible if you run it again
+
+No administrator rights, system Python, or installed copy of 7-Zip is required. You can also double-click **`launcher.bat`** on a fresh clone; it detects the missing dependencies and starts `install.bat` automatically.
+
+The resulting portable Python folder contains a complete Python 3.11 installation with every dependency pre-installed (PyTorch + CUDA, Flask, audio libraries, ML frameworks, and more):
 
 ```
 LocalSoundsAPI/
@@ -67,13 +76,7 @@ LocalSoundsAPI/
     ...
 ```
 
-This portable Python is completely isolated from any system Python you may have. No PATH changes, no conflicts, no virtual environments needed.
-
-### 3. Download and Extract Portable Tools
-
-From the same [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) page, download **`bin.zip`**.
-
-Extract it **into the existing `bin/` folder** inside your project. This populates the three required external tools:
+This portable Python is completely isolated from any system Python you may have. No PATH changes, no conflicts, no virtual environments needed. The installer also populates the three required external tools:
 
 ```
 bin/
@@ -82,9 +85,9 @@ bin/
   espeak-ng/        -- libespeak-ng.dll + espeak-ng-data/ (needed by Kokoro)
 ```
 
-If you already have these tools installed system-wide, you can update the paths in `config.py` to point to your existing installations instead.
+If automatic setup is unavailable, download `portable-python-env-v1.7z` and `bin.zip` from the [v1.0 dependency bundle](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.0). Extract both into the project root; the archives create `python/` and populate `bin/` respectively.
 
-### 4. AI Models (Auto-Download on First Use)
+### 3. AI Models (Auto-Download on First Use)
 
 You do **not** need to download models manually. When you click "Load" for any model in the web interface for the first time, it will automatically download from Hugging Face. This requires an internet connection.
 
@@ -102,7 +105,7 @@ models/
 
 The ACE-Step model is stored in `ACE-Step/models/ace_step/`.
 
-### 5. Configuration (config.py)
+### 4. Configuration (config.py)
 
 The main configuration file is `config.py` in the project root. Key settings you might want to change:
 

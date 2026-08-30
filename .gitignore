@@ -17,3 +17,4 @@ __pycache__/
 *.log
 models/*.pt
 .claude/
+.install-cache/

@@ -2,6 +2,8 @@
 
 ![License: MIT](https://img.shields.io/github/license/aivrar/LocalSoundsAPI) ![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11-blue) ![Python](https://img.shields.io/badge/Python-Portable-green) ![Stars](https://img.shields.io/github/stars/aivrar/LocalSoundsAPI)
 
+**Current release:** [v1.1 - One-Click Installer](https://github.com/aivrar/LocalSoundsAPI/releases/tag/v1.1)
+
 **The ultimate portable, offline all-in-one audio studio**
 Text-to-Speech · Transcription - Subtitles - Music Generation · Sound Effects · Video Production · AI Chatbot
 
@@ -49,19 +51,14 @@ Everything runs locally from one folder — no installation, no internet needed 
 ## Quick Start – Fully Portable (No Installation)
 
 1. **Download the repository code**  
-   Go to the main repo → Code → Download ZIP.  
-   Extract it to any folder you like (e.g., Desktop, Documents, or a USB drive). This is your main project folder.
+   Use `git clone https://github.com/aivrar/LocalSoundsAPI.git`, or choose **Code → Download ZIP** on GitHub and extract it anywhere you like.
 
-2. **Download the portable binaries from Releases**  
-   Go to [Releases](https://github.com/aivrar/LocalSoundsAPI/releases/latest) and download:  
-   - `portable-python-env-v1.7z`  
-   - `bin.zip`
+2. **Run the one-click setup**
+   Double-click **`install.bat`**. It downloads the required portable Python environment and audio tools from the newest [compatible dependency bundle on GitHub Releases](https://github.com/aivrar/LocalSoundsAPI/releases), verifies their SHA-256 hashes, extracts them into the correct folders, and opens the launcher. No administrator rights or system Python are needed. The initial download is about 2.1 GB.
 
-3. **Extract the binaries correctly**  
-   - Extract `portable-python-env-v1.7z` **directly into your main project folder** → it creates the `python/` subfolder.  
-   - Extract `bin.zip` **into the existing `bin/` folder** (inside your main project folder) → it populates `bin/ffmpeg/`, `bin/rubberband/`, and `bin/espeak-ng/`.
+   You can also double-click **`launcher.bat`** immediately after cloning; if the required files are missing, it starts `install.bat` automatically.
 
-4. **Launch the app**
+3. **Launch the app**
    - **Launcher GUI (recommended):**
      Double-click `launcher.bat`
      → Opens a desktop app where you can select GPUs, add instances on any port, start/stop them, view all logs in one place, and download models or tools.
@@ -74,7 +71,7 @@ Everything runs locally from one folder — no installation, no internet needed 
      Double-click `(portable) LocalSoundsAPI-Multi.bat`
      → Asks how many instances and starting port, then opens separate cmd windows for each.
 
-**First run only:** The app auto-downloads all models (~8–12 GB total). This happens on a need-to-use basis once and can take 10–40 minutes. Just let it finish.
+**First use of each engine:** Its AI model downloads on demand (about 8–12 GB for all models). You can also pre-download selected models from the launcher's **Models & Tools** tab. Downloads can take 10–40 minutes depending on your connection.
 
 That's it – completely offline and portable after the first run!
 
@@ -114,6 +111,8 @@ project-root/
 ├── templates/                 # HTML pages
 ├── routes/                    # All Flask endpoints
 ├── python/                    # Portable Python environment (from the 7z)
+├── scripts/install.ps1        # Download, verification, and extraction logic
+├── install.bat                # One-click first-time setup
 ├── launcher.py                # GUI launcher (instance manager, model downloads)
 ├── launcher.bat               # Runs the launcher with portable Python
 ├── (portable) LocalSoundsAPI-Single.bat
